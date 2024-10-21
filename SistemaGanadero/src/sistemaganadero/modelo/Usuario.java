@@ -41,7 +41,7 @@ public class Usuario {
         this.rol = rol;
     }
 
-    public Usuario(int id, String cuil, String email, String password, String dni, char sexo, String nombre, String apellido, Date fechaNacimiento, Boolean activo, Rol rol, List<Establecimiento> establecimientos) {
+    public Usuario(int id, String cuil, String email, String password, String dni, char sexo, String nombre, String apellido, Date fechaNacimiento, Boolean activo, Rol rol) {
         this.id = id;
         this.cuil = cuil;
         this.email = email;
@@ -53,7 +53,6 @@ public class Usuario {
         this.fechaNacimiento = fechaNacimiento;
         this.activo = activo;
         this.rol = rol;
-        this.establecimientos = new ArrayList<>();
     }
 
         

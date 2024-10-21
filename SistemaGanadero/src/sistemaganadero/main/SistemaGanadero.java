@@ -6,12 +6,25 @@ package sistemaganadero.main;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+import java.sql.Date;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+import sistemaganadero.dao.MockCategoriaDAO;
+import sistemaganadero.dao.MockEstablecimientoDAO;
+import sistemaganadero.dao.MockMortandadDAO;
+import sistemaganadero.dao.MockMovimientoDAO;
+import sistemaganadero.dao.MockSubcategoriaDAO;
+import sistemaganadero.dao.MockUsuarioDAO;
+import sistemaganadero.dao.MockUsuarioEstablecimientoDAO;
+import sistemaganadero.modelo.Categoria;
+import sistemaganadero.modelo.Subcategoria;
+import sistemaganadero.modelo.Movimiento;
+
 import sistemaganadero.modelo.Usuario;
 import sistemaganadero.modelo.Rol;
 import sistemaganadero.modelo.Establecimiento;
+import sistemaganadero.modelo.Mortandad;
 
 /**
  *
@@ -20,127 +33,52 @@ import sistemaganadero.modelo.Establecimiento;
 public class SistemaGanadero {
 
     public static void main(String[] args) {
-        List<Usuario> usuarios = new ArrayList<>();
+        // Crear los DAOs simulados
+        MockUsuarioDAO mockUsuarioDAO = new MockUsuarioDAO();
+        MockEstablecimientoDAO mockEstablecimientoDAO = new MockEstablecimientoDAO();
+        MockUsuarioEstablecimientoDAO mockUsuarioEstablecimientoDAO = new MockUsuarioEstablecimientoDAO();
+        MockCategoriaDAO mockCategoriaDAO = new MockCategoriaDAO();
+        MockSubcategoriaDAO mockSubcategoriaDAO = new MockSubcategoriaDAO(mockCategoriaDAO);
+ // Instanciar MockMovimientoDAO con dependencias
+        MockMovimientoDAO mockMovimientoDAO = new MockMovimientoDAO(mockEstablecimientoDAO, mockSubcategoriaDAO);  
         
-        // Crear roles para los usuarios
-        Rol roleAdmin = new Rol(1, "Dueño");
-        Rol roleUser = new Rol(2, "Administrador");
-
-        // Crear distintas fechas de nacimiento
-        Calendar cal1 = Calendar.getInstance();
-        cal1.set(1996, Calendar.JANUARY, 29);
-        Date fechaNacimiento1 = cal1.getTime();
-
-        Calendar cal2 = Calendar.getInstance();
-        cal2.set(1985, Calendar.MARCH, 15);
-        Date fechaNacimiento2 = cal2.getTime();
-
-        Calendar cal3 = Calendar.getInstance();
-        cal3.set(1990, Calendar.JULY, 22);
-        Date fechaNacimiento3 = cal3.getTime();
-
-        Calendar cal4 = Calendar.getInstance();
-        cal4.set(1988, Calendar.DECEMBER, 5);
-        Date fechaNacimiento4 = cal4.getTime();
-
-        Calendar cal5 = Calendar.getInstance();
-        cal5.set(1975, Calendar.MAY, 10);
-        Date fechaNacimiento5 = cal5.getTime();
-
-        Calendar cal6 = Calendar.getInstance();
-        cal6.set(1992, Calendar.SEPTEMBER, 18);
-        Date fechaNacimiento6 = cal6.getTime();
-
-        Calendar cal7 = Calendar.getInstance();
-        cal7.set(1980, Calendar.FEBRUARY, 28);
-        Date fechaNacimiento7 = cal7.getTime();
-
-        Calendar cal8 = Calendar.getInstance();
-        cal8.set(1993, Calendar.JUNE, 12);
-        Date fechaNacimiento8 = cal8.getTime();
-
-        // Agregar 3 dueños
-        usuarios.add(new Usuario("20123456789", "duenio1@example.com", "1234", "12345678", 'M', "Juan", "Pérez", fechaNacimiento1, true, roleAdmin));
-        usuarios.add(new Usuario("20123456788", "duenio2@example.com", "5678", "87654321", 'F', "Ana", "Gomez", fechaNacimiento2, true, roleAdmin));
-        usuarios.add(new Usuario("20123456787", "duenio3@example.com", "9101", "34561234", 'M', "Carlos", "Ramirez", fechaNacimiento3, true, roleAdmin));
-
-        // Agregar 5 administradores
-        usuarios.add(new Usuario("20876543219", "admin1@example.com", "4321", "98765432", 'M', "Jose", "Lopez", fechaNacimiento4, true, roleUser));
-        usuarios.add(new Usuario("20876543218", "admin2@example.com", "5678", "87654321", 'F', "Maria", "Fernandez", fechaNacimiento5, true, roleUser));
-        usuarios.add(new Usuario("20876543217", "admin3@example.com", "6789", "76543210", 'M', "Luis", "Martinez", fechaNacimiento6, true, roleUser));
-        usuarios.add(new Usuario("20876543216", "admin4@example.com", "7890", "65432109", 'F', "Laura", "Rodriguez", fechaNacimiento7, true, roleUser));
-        usuarios.add(new Usuario("20876543215", "admin5@example.com", "8901", "54321098", 'M', "Pedro", "Gonzalez", fechaNacimiento8, true, roleUser));
+        // Instanciar MockMortandadDAO con la instancia de MockMovimientoDAO
+        MockMortandadDAO mockMortandadDAO = new MockMortandadDAO(mockMovimientoDAO); 
         
+        Establecimiento establecimientoActual = null;
+        // Obtener los usuarios simulados
+        List<Usuario> usuarios = mockUsuarioDAO.obtenerUsuarios();
         Scanner sc = new Scanner(System.in);
         System.out.println("Inicio de Sesion");
 
         Usuario usuarioActual = validarLogin(usuarios);
 
+
         if (usuarioActual != null) {
-            // Mostrar menú o realizar acciones después de iniciar sesión exitosamente
+            // Mostrar mensaje de bienvenida
             System.out.println("Bienvenido, " + usuarioActual.getNombre());
-            // Continuar con el flujo del sistema...
+
+            // Seleccionar establecimiento
+            List<Integer> establecimientos = mockUsuarioEstablecimientoDAO.obtenerEstablecimientosPorUsuario(usuarioActual.getId());
+            if (!establecimientos.isEmpty()) {
+                establecimientoActual = seleccionarEstablecimiento(mockEstablecimientoDAO, establecimientos);
+                
+                if (establecimientoActual != null) {
+                    System.out.println("Establecimiento seleccionado: " + establecimientoActual.getNombre());
+
+                    // Menú principal
+                    mostrarMenuPrincipal(usuarioActual, mockCategoriaDAO, mockSubcategoriaDAO, establecimientoActual, mockMortandadDAO);
+                } else {
+                    System.out.println("No seleccionó un establecimiento. Volviendo al inicio.");
+                }
+            } else {
+                System.out.println("No tiene establecimientos asignados.");
+            }
         } else {
             System.out.println("Saliendo del sistema...");
-            return;
         }
-
-        int opcion;
-        do {
-            opcion = mostrarMenuPrincipal();
-            switch (opcion) {
-                case 1:
-                    System.out.println("Saliendo del sistema...");
-                    break;
-                case 2:
-                    System.out.println("Opción 2 seleccionada");
-                    break;
-                case 3:
-                    System.out.println("Opción 3 seleccionada");
-                    break;
-                case 4:
-                    System.out.println("Opción 4 seleccionada");
-                    break;
-                case 5:
-                    System.out.println("Opción 5 seleccionada");
-                    break;
-                default:
-                    System.out.println("Opción no válida. Intente de nuevo.");
-            }
-        } while (opcion != 1);
     }
 
-    /**
-     * Muestra el menú principal y devuelve una opción entre 1 y 5
-     *
-     * @return valor entero elegido
-     */
-    private static int mostrarMenuPrincipal() {
-        Scanner sc = new Scanner(System.in);
-        int opcion = 0;
-        System.out.println("    Menu Principal    ");
-        System.out.println("1) SALIR");
-        System.out.println("2) Opción 2");
-        System.out.println("3) Opción 3");
-        System.out.println("4) Opción 4");
-        System.out.println("5) Opción 5");
-        
-        do {
-            try {
-                System.out.print("Seleccione una opción: ");
-                opcion = sc.nextInt();
-                if (opcion < 1 || opcion > 5) {
-                    System.out.println("Debe ingresar una opción válida entre 1 y 5.");
-                }
-            } catch (Exception e) {
-                System.out.println("Debe ingresar un número.");
-                sc.nextLine(); // Limpiar el buffer del scanner
-                opcion = 0;
-            }
-        } while (opcion < 1 || opcion > 5);
-        return opcion;
-    }
-    
     /**
      * Función para validar el inicio de sesión
      * 
@@ -181,4 +119,285 @@ public class SistemaGanadero {
         }
         return usuarioActual;  // Login exitoso
     }
+    
+    private static Establecimiento seleccionarEstablecimiento(MockEstablecimientoDAO mockEstablecimientoDAO, List<Integer> idsEstablecimientos) {
+        Scanner sc = new Scanner(System.in);
+        List<Establecimiento> establecimientosUsuario = new ArrayList<>();
+
+        // Obtener solo los establecimientos relacionados con el usuario
+        for (Integer idEstablecimiento : idsEstablecimientos) {
+            for (Establecimiento est : mockEstablecimientoDAO.obtenerEstablecimientos()) {
+                if (est.getId() == idEstablecimiento) {
+                    establecimientosUsuario.add(est);
+                }
+            }
+        }
+
+        if (establecimientosUsuario.isEmpty()) {
+            System.out.println("No hay establecimientos disponibles.");
+            return null;
+        }
+
+        System.out.println("Seleccione un establecimiento:");
+
+        // Mostrar los establecimientos disponibles
+        for (int i = 0; i < establecimientosUsuario.size(); i++) {
+            System.out.println((i + 1) + ") " + establecimientosUsuario.get(i).getNombre());
+        }
+
+        int seleccion = -1;
+        do {
+            try {
+                System.out.print("Ingrese el número de establecimiento (o 0 para salir): ");
+                seleccion = sc.nextInt();
+                if (seleccion == 0) {
+                    return null; // Usuario eligió salir
+                }
+                if (seleccion < 1 || seleccion > establecimientosUsuario.size()) {
+                    System.out.println("Debe ingresar una opción válida.");
+                    seleccion = -1;
+                }
+            } catch (Exception e) {
+                System.out.println("Debe ingresar un número.");
+                sc.nextLine(); // Limpiar el buffer del scanner
+            }
+        } while (seleccion == -1);
+
+        // Retornar el establecimiento seleccionado
+        return establecimientosUsuario.get(seleccion - 1);
+    }
+
+    private static void mostrarMenuPrincipal(Usuario usuarioActual, MockCategoriaDAO mockCategoriaDAO, MockSubcategoriaDAO mockSubcategoriaDAO, Establecimiento establecimientoActual,MockMortandadDAO mockMortandadDAO) {
+        Scanner sc = new Scanner(System.in);
+        int opcion = 0;
+
+        do {
+            System.out.println("    Menu Principal    ");
+            System.out.println("1) Categoria");
+            System.out.println("2) Movimientos");
+            System.out.println("3) Informes");
+            System.out.println("4) Cerrar Sesión");
+            System.out.print("Seleccione una opción: ");
+            opcion = sc.nextInt();
+
+            switch (opcion) {
+                case 1:
+                    mostrarMenuCategoria(usuarioActual, mockCategoriaDAO, mockSubcategoriaDAO);
+                    break;
+                case 2:
+                    System.out.println("Movimientos aún no implementado.");
+                    break;
+                case 3:
+                    mostrarMenuInformes(establecimientoActual, mockMortandadDAO);
+                    break;
+                case 4:
+                    System.out.println("Cerrando sesión...");
+                    break;
+                default:
+                    System.out.println("Opción inválida.");
+            }
+        } while (opcion != 4);
+    }
+
+    /**
+     * Función para mostrar el menú de categorías
+     */
+private static void mostrarMenuCategoria(Usuario usuarioActual, MockCategoriaDAO mockCategoriaDAO, MockSubcategoriaDAO mockSubcategoriaDAO) {
+    Scanner sc = new Scanner(System.in);
+    int opcionCategoria;
+
+    // Si el usuario es "Dueño/a", mostrar todas las opciones
+    if (usuarioActual.getRol().getNombre().equalsIgnoreCase("Dueño")) {
+        do {
+            System.out.println("    Menu Categoria    ");
+            System.out.println("1) Agregar categoria");
+            System.out.println("2) Modificar categoria");
+            System.out.println("3) Eliminar categoria");
+            System.out.println("4) Listar categorias");
+            System.out.println("0) Volver");
+            System.out.print("Seleccione una opción: ");
+            opcionCategoria = sc.nextInt();
+
+            switch (opcionCategoria) {
+                case 1:
+                    agregarCategoria(mockCategoriaDAO);
+                    break;
+                case 2:
+                    modificarCategoria(mockCategoriaDAO);
+                    break;
+                case 3:
+                    eliminarCategoria(mockCategoriaDAO);
+                    break;
+                case 4:
+                    listarCategoriasConDetalles(mockCategoriaDAO, mockSubcategoriaDAO);
+                    break;
+                case 0:
+                    System.out.println("Volviendo al menú principal...");
+                    break;
+                default:
+                    System.out.println("Opción inválida.");
+            }
+        } while (opcionCategoria != 0);
+
+    } else {
+        // Si no es "Dueño/a", solo mostrar "Listar categorias" y "Volver"
+        listarCategoriasConDetalles(mockCategoriaDAO, mockSubcategoriaDAO);
+    }
+}
+
+private static void listarCategoriasConDetalles(MockCategoriaDAO mockCategoriaDAO, MockSubcategoriaDAO mockSubcategoriaDAO) {
+    Scanner sc = new Scanner(System.in);
+
+    // Listar las categorías
+    listarCategorias(mockCategoriaDAO);
+
+    // Menu para ver detalles o volver
+    int opcionDetalle = -1; // Inicializa con un valor no válido
+    do {
+        try {
+            System.out.print("Seleccione el ID de la categoría para ver detalles o 0 para volver: ");
+            opcionDetalle = sc.nextInt();
+
+            if (opcionDetalle > 0) {
+                Categoria categoriaSeleccionada = null;
+
+                // Buscar la categoría seleccionada usando un bucle for
+                for (Categoria categoria : mockCategoriaDAO.obtenerCategorias()) {
+                    if (categoria.getId() == opcionDetalle) {
+                        categoriaSeleccionada = categoria;
+                        break; // Salir del bucle si se encuentra la categoría
+                    }
+                }
+
+                if (categoriaSeleccionada != null) {
+                    mostrarDetallesCategoria(categoriaSeleccionada, mockSubcategoriaDAO);
+                } else {
+                    System.out.println("Categoría no encontrada.");
+                }
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Entrada no válida. Debe ser un número entero.");
+            sc.next(); // Limpiar el buffer del scanner
+        }
+    } while (opcionDetalle != 0);
+
+    System.out.println("Volviendo al menú de categorías...");
+}
+
+private static void mostrarDetallesCategoria(Categoria categoria, MockSubcategoriaDAO mockSubcategoriaDAO) {
+    System.out.println("Detalles de la Categoría:");
+    System.out.println("Nombre: " + categoria.getNombre());
+    System.out.println("Descripción: " + categoria.getDescripcion());
+
+    // Mostrar subcategorías de la categoría seleccionada
+    List<Subcategoria> subcategorias = mockSubcategoriaDAO.obtenerSubcategoriasPorCategoria(categoria);
+    if (!subcategorias.isEmpty()) {
+        System.out.println("Subcategorías:");
+        for (Subcategoria subcategoria : subcategorias) {
+            System.out.println("- " + subcategoria.getNombre());
+        }
+    } else {
+        System.out.println("No hay subcategorías asociadas.");
+    }
+
+    // La única opción es volver
+    Scanner sc = new Scanner(System.in);
+    System.out.println("Presione cualquier tecla para volver...");
+    sc.nextLine();
+}
+
+private static void agregarCategoria(MockCategoriaDAO mockCategoriaDAO) {
+    Scanner sc = new Scanner(System.in);
+    System.out.print("Ingrese el nombre de la nueva categoria: ");
+    String nuevoNombre = sc.nextLine();
+    System.out.print("Ingrese la descripción de la nueva categoria: ");
+    String nuevaDescripcion = sc.nextLine();
+    mockCategoriaDAO.agregarCategoria(new Categoria(mockCategoriaDAO.obtenerCategorias().size() + 1, nuevoNombre, nuevaDescripcion));
+    System.out.println("Categoría agregada.");
+}
+
+private static void modificarCategoria(MockCategoriaDAO mockCategoriaDAO) {
+    Scanner sc = new Scanner(System.in);
+    listarCategorias(mockCategoriaDAO);
+    System.out.print("Seleccione el ID de la categoría a modificar: ");
+    int idModificar = sc.nextInt();
+    sc.nextLine(); // limpiar el buffer
+    System.out.print("Ingrese el nuevo nombre: ");
+    String nombreModificado = sc.nextLine();
+    System.out.print("Ingrese la nueva descripción: ");
+    String descripcionModificada = sc.nextLine();
+    mockCategoriaDAO.modificarCategoria(idModificar, nombreModificado, descripcionModificada);
+    System.out.println("Categoría modificada.");
+}
+
+private static void eliminarCategoria(MockCategoriaDAO mockCategoriaDAO) {
+    Scanner sc = new Scanner(System.in);
+    listarCategorias(mockCategoriaDAO);
+    System.out.print("Seleccione el ID de la categoría a eliminar: ");
+    int idEliminar = sc.nextInt();
+    mockCategoriaDAO.eliminarCategoria(idEliminar);
+    System.out.println("Categoría eliminada.");
+}
+private static void listarCategorias(MockCategoriaDAO mockCategoriaDAO) {
+    System.out.println("Listado de categorías:");
+    // Obtener todas las categorías y mostrarlas
+    List<Categoria> categorias = mockCategoriaDAO.obtenerCategorias();
+    if (categorias.isEmpty()) {
+        System.out.println("No hay categorías disponibles.");
+    } else {
+        for (Categoria categoria : categorias) {
+            System.out.println("ID: " + categoria.getId() + " - " + categoria.getNombre());
+        }
+    }
+    System.out.println("0) Volver");
+}
+
+private static void mostrarMenuInformes(Establecimiento establecimientoActual, MockMortandadDAO mockMortandadDAO) {
+    Scanner sc = new Scanner(System.in);
+    int opcionInforme;
+
+    do {
+        System.out.println("    Menu de Informes    ");
+        System.out.println
+("1) Informe de mortandad por fechas");
+        System.out.println("0) Volver");
+        System.out.print("Seleccione una opción: ");
+        opcionInforme = sc.nextInt();
+
+        switch (opcionInforme) {
+            case 1:
+                System.out.print("Ingrese la fecha desde (yyyy-MM-dd): ");
+                Date desde = Date.valueOf(sc.next());
+                System.out.print("Ingrese la fecha hasta (yyyy-MM-dd): ");
+                Date hasta = Date.valueOf(sc.next());
+
+                // Obtener las mortandades en el rango de fechas para el establecimiento actual
+                List<Mortandad> mortandades = mockMortandadDAO.obtenerMortandadesPorFechasYEstablecimiento(desde, hasta, establecimientoActual);
+
+                if (mortandades.isEmpty()) {
+                    System.out.println("No se encontraron mortandades en el rango seleccionado.");
+                } else {
+                        System.out.println("Mortandades encontradas:");
+                        for (Mortandad mortandad : mortandades) {
+                            System.out.println("ID Movimiento: " + mortandad.getId());
+                            System.out.println("Fecha: " + mortandad.getFecha());
+                            System.out.println("Causa: " + mortandad.getCausa());
+                            System.out.println("N° Trazabilidad: " + mortandad.getNumeroTrazabilidad());
+                            // Información del movimiento y subcategoría
+                            Movimiento movimiento = mortandad.getMovimiento();
+                            Subcategoria subcategoria = movimiento.getSubcategoria();
+                            System.out.println("Subcategoría: " + subcategoria.getNombre());
+                            System.out.println("-----------------------------");
+                        }
+                    
+                }
+                break;
+            case 0:
+                System.out.println("Volviendo al menú principal...");
+                break;
+            default:
+                System.out.println("Opción inválida.");
+        }
+    } while (opcionInforme != 0);
+}
 }
