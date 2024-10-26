@@ -7,8 +7,11 @@ package sistemaganadero.modelo;
 import java.util.Date;
 
 /**
- *
- * @author Usuario
+ * Esta clase representa una compra, que es un tipo de movimiento.
+ * Cada compra tiene un identificador único, un origen, un peso, un número de DTE (Documento de Transporte Electrónico) y un número de trazabilidad.
+ * Extiende la clase Movimiento, que contiene información común a todos los movimientos.
+ * Incluye métodos getter y setter para cada atributo.
+ * @author Francisco de la Cruz v1.0
  */
 public class Compra extends Movimiento{
     private int id;

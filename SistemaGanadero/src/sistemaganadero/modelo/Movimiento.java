@@ -7,8 +7,10 @@ package sistemaganadero.modelo;
 import java.util.Date;
 
 /**
- *
- * @author Usuario
+ * Esta clase representa un movimiento que puede ocurrir en un establecimiento.
+ * Cada movimiento tiene un identificador único, una cantidad, una fecha, un establecimiento asociado y una subcategoría.
+ * Incluye métodos getter y setter para cada atributo.
+ * @author Francisco de la Cruz v1.0
  */
 public class Movimiento {
     private int id;

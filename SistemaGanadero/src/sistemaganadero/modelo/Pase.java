@@ -7,8 +7,11 @@ package sistemaganadero.modelo;
 import java.util.Date;
 
 /**
- *
- * @author Usuario
+ * Esta clase representa un pase, que es un tipo de movimiento. 
+ * Cada pase tiene un identificador único, una descripción, y subcategorías de origen y destino. 
+ * Hereda atributos comunes de la clase Movimiento, como cantidad, fecha y establecimiento.
+ * Incluye métodos getter y setter para cada atributo.
+ * @author Francisco de la Cruz v1.0
  */
 public class Pase extends Movimiento{
     private int id;

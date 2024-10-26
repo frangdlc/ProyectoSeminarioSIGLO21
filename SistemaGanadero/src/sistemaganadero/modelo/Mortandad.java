@@ -7,8 +7,11 @@ package sistemaganadero.modelo;
 import java.util.Date;
 
 /**
- *
- * @author Usuario
+ * Esta clase representa una mortandad, que es un tipo de movimiento.
+ * Cada mortandad tiene un identificador único, una causa, un número de trazabilidad, y una relación con otro movimiento. 
+ * Extiende la clase Movimiento, que contiene información común a todos los movimientos.
+ * Incluye métodos getter y setter para cada atributo.
+ * @author Francisco de la Cruz v1.0
  */
 public class Mortandad extends Movimiento{
     private int id;

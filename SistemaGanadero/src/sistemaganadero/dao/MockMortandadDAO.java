@@ -12,8 +12,9 @@ import sistemaganadero.modelo.Establecimiento;
 import sistemaganadero.modelo.Movimiento;
 
 /**
- *
- * @author Usuario
+ * Esta clase simula la implementación de la interfaz IMortandadDAO para propósitos de prueba.
+ * Proporciona una lista en memoria de mortandades y métodos para gestionar esas mortandades sin tener una base de datos real.
+ * @author Francisco de la Cruz v1.0
  */
 public class MockMortandadDAO implements IMortandadDAO {
     private List<Mortandad> mortandades = new ArrayList<>();
@@ -32,12 +33,23 @@ public class MockMortandadDAO implements IMortandadDAO {
         mortandades.add(new Mortandad(movimiento4.getId(), "Predador", "012JKL",  movimiento4, movimiento4.getCantidad(), movimiento4.getFecha(), movimiento4.getEstablecimiento(), movimiento4.getSubcategoria()));
     }
 
-    // Método para obtener todas las mortandades
+    /**
+     * Obtiene todas las mortandades simuladas.
+     * 
+     * @return List<Mortandad> Lista de todas las mortandades disponibles.
+     */
     public List<Mortandad> obtenerMortandades() {
         return mortandades;
     }
 
-    // Método para obtener mortandades por fechas y establecimiento
+    /**
+     * Obtiene mortandades filtradas por fechas y establecimiento.
+     * 
+     * @param desde Fecha de inicio del rango.
+     * @param hasta Fecha de fin del rango.
+     * @param establecimiento Establecimiento para filtrar las mortandades.
+     * @return List<Mortandad> Lista de mortandades que cumplen con los criterios de búsqueda.
+     */
     public List<Mortandad> obtenerMortandadesPorFechasYEstablecimiento(Date desde, Date hasta, Establecimiento establecimiento) {
         List<Mortandad> resultados = new ArrayList<>();
         for (Mortandad mortandad : mortandades) {

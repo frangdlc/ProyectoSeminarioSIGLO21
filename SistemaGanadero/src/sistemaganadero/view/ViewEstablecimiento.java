@@ -9,9 +9,15 @@ import java.util.Scanner;
 import sistemaganadero.controller.ControllerEstablecimiento;
 import sistemaganadero.dao.IUsuarioEstablecimientoDAO;
 import sistemaganadero.modelo.Establecimiento;
+
 /**
- *
- * @author Usuario
+ * Esta clase se encarga de gestionar la vista relacionada con los establecimientos en la aplicación.
+ * Proporciona una interfaz para que los usuarios seleccionen un establecimiento de una lista de establecimientos disponibles, basada en su identificación de usuario.
+ * 
+ * La clase utiliza un controlador (ControllerEstablecimiento) para obtener la lista de establecimientos asociados a un usuario específico. 
+ * Si no hay establecimientos disponibles, se informa al usuario. 
+ * Además, permite al usuario ingresar su selección de manera segura, manejando entradas no válidas y permitiendo cancelar la selección.
+ * @author Francisco de la Cruz v1.0
  */
 public class ViewEstablecimiento {
     
@@ -20,7 +26,18 @@ public class ViewEstablecimiento {
     public ViewEstablecimiento(ControllerEstablecimiento controller) {
         this.controller = controller;
     }
-
+    
+/**
+* Permite al usuario seleccionar un establecimiento de una lista de establecimientos disponibles.
+* 
+* Este método recupera los establecimientos asociados al usuario especificado,
+* muestra la lista de establecimientos y solicita al usuario que seleccione uno.
+* Si el usuario ingresa 0, se cancela la selección.
+*
+* @param usuarioId El ID del usuario para el cual se desean obtener los establecimientos.
+* @param usuarioEstablecimientoDAO El objeto DAO que permite acceder a la relación entre usuarios y establecimientos.
+* @return Establecimiento El establecimiento seleccionado por el usuario, o null si no hay establecimientos disponibles o si el usuario decide salir.    
+ */
    public Establecimiento seleccionarEstablecimiento(int usuarioId, IUsuarioEstablecimientoDAO usuarioEstablecimientoDAO) {
        
         List<Establecimiento> establecimientos = controller.obtenerEstablecimientosPorUsuario(usuarioId, usuarioEstablecimientoDAO);

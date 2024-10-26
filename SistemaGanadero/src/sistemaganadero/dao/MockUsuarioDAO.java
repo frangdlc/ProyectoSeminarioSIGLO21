@@ -12,8 +12,9 @@ import sistemaganadero.modelo.Rol;
 import java.util.List;
 
 /**
- *
- * @author Usuario
+ * Esta clase simula la implementación de la interfaz IUsuarioDAO para propósitos de prueba.
+ * Proporciona una lista en memoria de usuarios y métodos para gestionar esos usuarios sin tener una base de datos real.
+ * @author Francisco de la Cruz v1.0
  */
 public class MockUsuarioDAO implements IUsuarioDAO{
         private List<Usuario> usuarios;
@@ -71,7 +72,11 @@ public class MockUsuarioDAO implements IUsuarioDAO{
         usuarios.add(new Usuario(8,"20876543215", "admin5@example.com", "8901", "54321098", 'M', "Pedro", "Gonzalez", fechaNacimiento8, true, roleUser));   
     }
 
-    // Método para obtener todos los usuarios simulados
+    /**
+     * Obtiene todos los usuarios simulados.
+     * 
+     * @return List<Usuario> Lista de todos los usuarios disponibles.
+     */
     public List<Usuario> obtenerUsuarios() {
         return usuarios;
     }

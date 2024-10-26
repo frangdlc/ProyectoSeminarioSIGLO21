@@ -10,8 +10,9 @@ import java.util.List;
 import sistemaganadero.modelo.Categoria;
 
 /**
- *
- * @author Usuario
+ * Esta clase simula la implementación de la interfaz ISubcategoriaDAO para propósitos de prueba.
+ * Proporciona una lista en memoria de subcategorías y métodos para gestionar esas subcategorías sin tener una base de datos real.
+ * @author Francisco de la Cruz v1.0
  */
 public class MockSubcategoriaDAO implements ISubcategoriaDAO {
     private List<Subcategoria> subcategorias;
@@ -31,7 +32,12 @@ public class MockSubcategoriaDAO implements ISubcategoriaDAO {
         subcategorias.add(new Subcategoria(2, "Venta", mockCategoriaDAO.obtenerCategoriaPorId(3)));
     }
 
-    // Obtener subcategorías por categoría
+    /**
+     * Obtiene subcategorías asociadas a una categoría específica.
+     * 
+     * @param categoria La categoría para la cual se desean obtener las subcategorías.
+     * @return List<Subcategoria> Lista de subcategorías que pertenecen a la categoría especificada.
+     */
     public List<Subcategoria> obtenerSubcategoriasPorCategoria(Categoria categoria) {
         List<Subcategoria> resultado = new ArrayList<>();
         for (Subcategoria subcategoria : subcategorias) {
@@ -42,6 +48,12 @@ public class MockSubcategoriaDAO implements ISubcategoriaDAO {
         return resultado;
     }
     
+    /**
+     * Obtiene una subcategoría por su ID.
+     * 
+     * @param id ID de la subcategoría a buscar.
+     * @return Subcategoria La subcategoría correspondiente al ID, o null si no se encuentra.
+     */
     public Subcategoria obtenerSubcategoria(int id) {
         for (Subcategoria subcategoria : subcategorias) {
             if (subcategoria.getId() == id) {

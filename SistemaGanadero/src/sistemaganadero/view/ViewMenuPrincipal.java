@@ -9,8 +9,9 @@ import sistemaganadero.modelo.Usuario;
 import sistemaganadero.modelo.Establecimiento;
 
 /**
- *
- * @author Usuario
+ *Esta clase gestiona la vista del menú principal de la aplicación. 
+ * Su función principal es presentar al usuario opciones para navegar a diferentes secciones de la aplicación, como categorías, informes y cerrar sesión
+ * @author Francisco de la Cruz v1.0
  */
 public class ViewMenuPrincipal {
     private ViewCategoria categoriaView;
@@ -22,7 +23,15 @@ public class ViewMenuPrincipal {
         this.viewInformes = viewInformes;
         this.viewMortandad = viewMortandad;
     }
-
+    
+/**
+ * Muestra el menú principal al usuario y gestiona la selección de opciones.
+ * Este método permite al usuario navegar a diferentes secciones de la aplicación,
+ * como categorías, informes y cerrar sesión.
+ *
+ * @param usuarioActual El usuario que ha iniciado sesión.
+ * @param establecimientoActual El establecimiento seleccionado relacionado con el usuario.
+ */
     public void mostrarMenuPrincipal(Usuario usuarioActual, Establecimiento establecimientoActual) {
         Scanner sc = new Scanner(System.in);
         int opcion = 0;
@@ -49,7 +58,11 @@ public class ViewMenuPrincipal {
             }
         } while (opcion != 4);
     }
-
+/**
+ * Muestra las opciones del menú principal en la consola.
+ * Este método imprime las diferentes opciones disponibles para el usuario,
+ * permitiéndole elegir una acción.
+ */
     private void mostrarMenu() {
         System.out.println("--------------------------");
         System.out.println("    Menu Principal    ");
@@ -59,7 +72,16 @@ public class ViewMenuPrincipal {
         System.out.println("4) Cerrar Sesión");
         System.out.println("--------------------------");
     }
-
+    
+/**
+ * Solicita al usuario que seleccione una opción del menú.
+ * Este método asegura que la opción ingresada sea un número válido
+ * dentro del rango permitido. Si la opción es inválida,
+ * se solicita al usuario que intente nuevamente.
+ *
+ * @param sc El escáner utilizado para leer la entrada del usuario.
+ * @return int La opción seleccionada por el usuario.
+ */
     private int solicitarOpcion(Scanner sc) {
         int opcion = -1;
         while (true) {

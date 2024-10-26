@@ -12,8 +12,9 @@ import sistemaganadero.modelo.Mortandad;
 import sistemaganadero.modelo.Establecimiento;
 
 /**
- *
- * @author Usuario
+ * Esta clase actúa como controlador en el patrón MVC (Modelo-Vista-Controlador) para gestionar la lógica relacionada con informes de mortandad. 
+ * Se encarga de interactuar con la capa de acceso a datos para obtener información.
+ * @author Francisco de la Cruz v1.0
  */
 public class ControllerInforme {
     private IMortandadDAO mortandadDAO;
@@ -25,6 +26,16 @@ public class ControllerInforme {
     public ControllerInforme() {
     }
     
+/**
+* Obtiene una lista de mortandades en un establecimiento dentro de un rango de fechas.
+* 
+* Este método utiliza el DAO de mortandad para recuperar los registros de mortandad que se encuentran entre las fechas especificadas para un establecimiento determinado.
+* 
+* @param desde Fecha de inicio del rango (inclusive).
+* @param hasta Fecha de fin del rango (inclusive).
+* @param establecimiento El establecimiento para el cual se desea obtener los datos de mortandad.
+* @return List<Mortandad> Lista de mortandades que cumplen con los criterios especificados.
+*/
     public List<Mortandad> obtenerMortandadesPorFechasYEstablecimiento(Date desde, Date hasta, Establecimiento establecimiento) {
         return mortandadDAO.obtenerMortandadesPorFechasYEstablecimiento(desde, hasta, establecimiento);
     }

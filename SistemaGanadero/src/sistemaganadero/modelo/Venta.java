@@ -7,8 +7,11 @@ package sistemaganadero.modelo;
 import java.util.Date;
 
 /**
- *
- * @author Usuario
+ * Esta clase representa un usuario en el sistema. 
+ * Cada usuario tiene atributos que describen su identidad, como su CUIL, email, contraseña, DNI, sexo, nombre, apellido, 
+ * fecha de nacimiento, estado de actividad, rol y una lista de establecimientos asociados.
+ * Incluye métodos getter y setter para cada atributo.
+ * @author Francisco de la Cruz v1.0
  */
 public class Venta extends Movimiento{
     private int id;

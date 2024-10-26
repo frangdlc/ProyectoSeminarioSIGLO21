@@ -5,8 +5,10 @@
 package sistemaganadero.modelo;
 
 /**
- *
- * @author Usuario
+ * Esta clase representa una subcategoría dentro de una categoría más amplia. 
+ * Cada subcategoría tiene un identificador único, un nombre y está asociada a una categoría.
+ * Incluye métodos getter y setter para cada atributo.
+ * @author Francisco de la Cruz v1.0
  */
 public class Subcategoria {
     

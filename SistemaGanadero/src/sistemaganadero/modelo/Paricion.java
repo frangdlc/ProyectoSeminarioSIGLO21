@@ -7,8 +7,10 @@ package sistemaganadero.modelo;
 import java.util.Date;
 
 /**
- *
- * @author Usuario
+ * Esta clase representa una parición, que es un tipo de movimiento. 
+ * Cada parición tiene un identificador único, una descripción, y hereda atributos comunes de la clase Movimiento, como cantidad, fecha, establecimiento y subcategoría.
+ * Incluye métodos getter y setter para cada atributo.
+ * @author Francisco de la Cruz v1.0
  */
 public class Paricion extends Movimiento{
     private int id;

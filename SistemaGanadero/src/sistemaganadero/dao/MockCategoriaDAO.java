@@ -9,8 +9,9 @@ import java.util.List;
 import sistemaganadero.modelo.Categoria;
 
 /**
- *
- * @author Usuario
+ * Esta clase simula la implementación de la interfaz ICategoriaDAO para propósitos de prueba.
+ * Proporciona una lista en memoria de categorías y métodos para gestionar esas categorías sin tener una base de datos real.
+ * @author Francisco de la Cruz v1.0
  */
 public class MockCategoriaDAO implements ICategoriaDAO {
     private List<Categoria> categorias;
@@ -24,17 +25,31 @@ public class MockCategoriaDAO implements ICategoriaDAO {
         categorias.add(new Categoria(3, "Novillos", "descripcion Novillos"));
     }
 
-    // Obtener todas las categorías
+    /**
+     * Obtiene todas las categorías.
+     * 
+     * @return List<Categoria> Lista de todas las categorías disponibles.
+     */
     public List<Categoria> obtenerCategorias() {
         return categorias;
     }
 
-    // Agregar una nueva categoría
+    /**
+     * Agrega una nueva categoría.
+     * 
+     * @param categoria La categoría que se desea agregar.
+     */
     public void agregarCategoria(Categoria categoria) {
         categorias.add(categoria);
     }
 
-    // Modificar una categoría existente
+    /**
+     * Modifica una categoría existente.
+     * 
+     * @param id ID de la categoría a modificar.
+     * @param nuevoNombre Nuevo nombre para la categoría.
+     * @param nuevaDescripcion Nueva descripción para la categoría.
+     */
     public void modificarCategoria(int id, String nuevoNombre, String nuevaDescripcion) {
         for (Categoria categoria : categorias) {
             if (categoria.getId() == id) {
@@ -45,11 +60,21 @@ public class MockCategoriaDAO implements ICategoriaDAO {
         }
     }
 
-    // Eliminar una categoría
+    /**
+     * Elimina una categoría.
+     * 
+     * @param id ID de la categoría que se desea eliminar.
+     */
     public void eliminarCategoria(int id) {
         categorias.removeIf(categoria -> categoria.getId() == id);
     }
- 
+    
+    /**
+     * Obtiene una categoría por su ID.
+     * 
+     * @param id ID de la categoría a buscar.
+     * @return Categoria La categoría correspondiente al ID, o null si no se encuentra.
+     */
     public Categoria obtenerCategoriaPorId(int id) {
     for (Categoria categoria : categorias) {
         if (categoria.getId() == id) {

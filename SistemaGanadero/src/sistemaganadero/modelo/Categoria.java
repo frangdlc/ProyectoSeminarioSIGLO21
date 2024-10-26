@@ -8,8 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
- * @author Usuario
+ * Esta clase representa una categoría que puede contener subcategorías.
+ * Cada categoría tiene un identificador único, un nombre, una descripción y una lista de subcategorías asociadas.
+ * Incluye métodos getter y setter para cada atributo.
+ * @author Francisco de la Cruz v1.0
  */
 public class Categoria {
     private int id;

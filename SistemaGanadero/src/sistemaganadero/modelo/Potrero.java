@@ -5,8 +5,10 @@
 package sistemaganadero.modelo;
 
 /**
- *
- * @author Usuario
+ * Esta clase representa un potrero, que es una unidad de terreno utilizada en la agricultura o ganadería. 
+ * Cada potrero tiene un identificador único, un nombre, una cantidad de hectáreas y está asociado a un establecimiento.
+ * Incluye métodos getter y setter para cada atributo.
+ * @author Francisco de la Cruz v1.0
  */
 public class Potrero {
     private int id;

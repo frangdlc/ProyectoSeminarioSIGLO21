@@ -10,8 +10,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *
- * @author Usuario
+ Esta clase simula la implementación de la interfaz IUsuarioEstablecimientoDAO para propósitos de prueba.
+ * Proporciona una representación en memoria de las relaciones entre usuarios y establecimientos, utilizando una estructura de datos que simula una relación muchos a muchos.
+ * @author Francisco de la Cruz v1.0
  */
 public class MockUsuarioEstablecimientoDAO implements IUsuarioEstablecimientoDAO{
        // Simula la relación muchos a muchos: usuario_id -> lista de establecimiento_id
@@ -32,20 +33,35 @@ public class MockUsuarioEstablecimientoDAO implements IUsuarioEstablecimientoDAO
         agregarRelacion(8, 1);
     }
 
-    // Método para agregar una relación entre usuario y establecimiento
+    /**
+     * Agrega una relación entre un usuario y un establecimiento.
+     * 
+     * @param usuarioId ID del usuario.
+     * @param establecimientoId ID del establecimiento.
+     */
     public void agregarRelacion(int usuarioId, int establecimientoId) {
         usuarioEstablecimientos.putIfAbsent(usuarioId, new ArrayList<>());
         usuarioEstablecimientos.get(usuarioId).add(establecimientoId);
     }
 
-    // Método para eliminar una relación entre usuario y establecimiento
+    /**
+     * Elimina una relación entre un usuario y un establecimiento.
+     * 
+     * @param usuarioId ID del usuario.
+     * @param establecimientoId ID del establecimiento.
+     */
     public void eliminarRelacion(int usuarioId, int establecimientoId) {
         if (usuarioEstablecimientos.containsKey(usuarioId)) {
             usuarioEstablecimientos.get(usuarioId).remove((Integer) establecimientoId);
         }
     }
 
-    // Método para obtener los establecimientos de un usuario
+    /**
+     * Obtiene la lista de establecimientos asociados a un usuario específico.
+     * 
+     * @param usuarioId ID del usuario.
+     * @return List<Integer> Lista de IDs de establecimientos asociados al usuario.
+     */
     public List<Integer> obtenerEstablecimientosPorUsuario(int usuarioId) {
         return usuarioEstablecimientos.getOrDefault(usuarioId, new ArrayList<>());
     }

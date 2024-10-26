@@ -8,8 +8,9 @@ import java.util.List;
 import sistemaganadero.modelo.Establecimiento;
 
 /**
- *
- * @author Usuario
+ * Esta clase simula la implementación de la interfaz IEstablecimientoDAO para propósitos de prueba.
+ * Proporciona una lista en memoria de establecimientos y métodos para gestionar esos establecimientos sin tener una base de datos real.
+ * @author Francisco de la Cruz v1.0
  */
 public class MockEstablecimientoDAO implements IEstablecimientoDAO {
     private List<Establecimiento> establecimientos;
@@ -22,12 +23,21 @@ public class MockEstablecimientoDAO implements IEstablecimientoDAO {
         establecimientos.add(new Establecimiento(2, "Los Pirulos", 600));
     }
 
-    // Método para obtener todos los establecimientos simulados
+    /**
+     * Obtiene todos los establecimientos simulados.
+     * 
+     * @return List<Establecimiento> Lista de todos los establecimientos disponibles.
+     */
     public List<Establecimiento> obtenerEstablecimientos() {
         return establecimientos;
     }
-    
-        public Establecimiento obtenerEstablecimiento(int id) {
+    /**
+     * Obtiene un establecimiento por su ID.
+     * 
+     * @param id ID del establecimiento a buscar.
+     * @return Establecimiento El establecimiento correspondiente al ID, o null si no se encuentra.
+     */
+    public Establecimiento obtenerEstablecimiento(int id) {
         for (Establecimiento establecimiento : establecimientos) {
             if (establecimiento.getId() == id) {
                 return establecimiento;

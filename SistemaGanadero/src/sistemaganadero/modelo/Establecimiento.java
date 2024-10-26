@@ -8,8 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
- * @author Usuario
+ * Esta clase representa un establecimiento que puede contener potreros y usuarios. 
+ * Cada establecimiento tiene un identificador único, un nombre, una cantidad de hectáreas, y listas de potreros y usuarios asociados.
+ * Incluye métodos getter y setter para cada atributo.
+ * @author Francisco de la Cruz v1.0
  */
 public class Establecimiento {
     private int id;

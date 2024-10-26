@@ -8,8 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
- * @author Usuario
+ * Esta clase representa un rol en el sistema. Cada rol tiene un identificador único y un nombre que lo describe.
+ * Incluye métodos getter y setter para cada atributo.
+ * @author Francisco de la Cruz v1.0
  */
 public class Rol {
     

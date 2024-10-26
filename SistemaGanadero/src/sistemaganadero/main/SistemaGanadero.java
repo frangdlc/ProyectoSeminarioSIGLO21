@@ -32,16 +32,33 @@ import sistemaganadero.view.ViewMenuPrincipal;
 import sistemaganadero.view.ViewMortandad;
 
 /**
- * CUANDO COLOCO EN SELECCIONAR PARA MODIFICAR 0, ESTA TOMANDO UNA OPCION IGUAL
- * QUE AL EDITAR CARGUE LOS DATOS ANTERIORES
- * QUE TENGA LA OPCION DE CANCELAR
+ * El programa simula un sistema de gestión ganadera. 
+ * Utiliza objetos simulados (Mock), DAO para manejar datos y controladores para gestionar la lógica del negocio. Las vistas se encargan de la interacción con el usuario.
+ * Pasos del Programa actualmente:
+ * Crear Simulados:
+ * DAOs (Data Access Objects) son objetos que manejan la interacción con la base de datos.
+ * Aquí se crean versiones simuladas de estos DAOs, mediante MOCK para usuarios, establecimientos, categorías, subcategorías, movimientos y mortandad.
+ * Crear Controladores:
+ * Los controladores gestionan la lógica del negocio.
+ * Se crean controladores para categorías, establecimientos, informes y el sistema general.
+ * Crear Vistas:
+ * Las vistas son las interfaces que interactúan con el usuario.
+ * Se crean vistas para categorías, establecimientos, informes, mortandad, inicio de sesión y el menú principal.
+ * Inicio de Sesión:
+ * El usuario inicia sesión a través de la vista de inicio de sesión.
+ * Si el inicio de sesión es exitoso, se muestra un mensaje de bienvenida.
+ * Seleccionar Establecimiento:
+ * El usuario selecciona un establecimiento a través de la vista correspondiente.
+ * Si se selecciona un establecimiento, se muestra el menú principal.
+ * Mostrar Menú Principal:
+ * El menú principal permite al usuario interactuar con las diferentes partes del sistema.
  * 
- * @author Usuario
+ * @author Francisco de la Cruz v1.0
  */
 public class SistemaGanadero {
 
      public static void main(String[] args) {
-        // Crear los DAOs simulados
+        // Crear los datos simulados
         IUsuarioDAO mockUsuarioDAO = new MockUsuarioDAO();
         IEstablecimientoDAO mockEstablecimientoDAO = new MockEstablecimientoDAO();
         IUsuarioEstablecimientoDAO mockUsuarioEstablecimientoDAO = new MockUsuarioEstablecimientoDAO();
@@ -71,10 +88,7 @@ public class SistemaGanadero {
             System.out.println("Bienvenido, " + usuarioActual.getNombre());
             
             // Seleccionar establecimiento
-                                    System.out.println("Hola2");
-
            Establecimiento establecimientoActual = controllerSistema.seleccionarEstablecimiento(usuarioActual, viewEstablecimiento);
-                        System.out.println("Hola1");
 
             if (establecimientoActual != null) {
                 // Mostrar menú principal

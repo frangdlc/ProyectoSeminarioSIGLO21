@@ -7,8 +7,11 @@ package sistemaganadero.modelo;
 import java.util.Date;
 
 /**
- *
- * @author Usuario
+ * Esta clase representa un diferenciamiento, que es un tipo de movimiento.
+ * Cada diferenciamiento tiene un identificador único y una descripción.
+ * Extiende la clase Movimiento, que contiene información común a todos los movimientos.
+ * Incluye métodos getter y setter para cada atributo.
+ * @author Francisco de la Cruz v1.0
  */
 public class Diferenciamiento extends Movimiento{
     private int id;

@@ -9,8 +9,9 @@ import sistemaganadero.controller.ControllerInforme;
 import sistemaganadero.modelo.Establecimiento;
 
 /**
- *
- * @author Usuario
+ * Esta clase representa la vista para mostrar informes relacionados con la mortandad de un establecimiento. 
+ * Se encarga de interactuar con el usuario a través de la consola y de presentar las opciones disponibles para generar informes.
+ * @author Francisco de la Cruz v1.0
  */
 public class ViewInformes {
     private ControllerInforme controller;
@@ -19,6 +20,15 @@ public class ViewInformes {
         this.controller = controller;
     }
 
+/**
+* Muestra el menú de informes y gestiona la interacción del usuario.
+* 
+* Este método presenta un menú al usuario donde puede seleccionar diferentes opciones para generar informes. 
+* Permite al usuario elegir un informe de mortandad por fechas o volver al menú principal.
+* 
+* @param establecimiento El establecimiento para el cual se desea generar el informe.
+* @param viewMortandad La vista encargada de mostrar el informe de mortandad.
+*/
     public void mostrarMenuInformes(Establecimiento establecimiento, ViewMortandad viewMortandad) {
         Scanner sc = new Scanner(System.in);
         int opcionInforme;

@@ -9,8 +9,9 @@ import sistemaganadero.controller.ControllerSistema;
 import sistemaganadero.modelo.Usuario;
 
 /**
- *
- * @author Usuario
+ *Esta clase se encarga de gestionar la vista para el inicio de sesión de un usuario en el sistema. 
+ * Su función principal es permitir que un usuario ingrese su nombre de usuario o correo electrónico y su contraseña para acceder a la aplicación.
+ * @author Francisco de la Cruz v1.0
  */
 public class ViewInicioSesion {
     
@@ -19,7 +20,16 @@ public class ViewInicioSesion {
     public ViewInicioSesion(ControllerSistema controllerSistema) {
         this.controllerSistema = controllerSistema;
     }
-
+    
+/**
+ * Este método solicita al usuario que ingrese su nombre de usuario o correo electrónico 
+ * y su contraseña. Si las credenciales son correctas, se devuelve un objeto Usuario 
+ * que representa al usuario autenticado. Si el usuario decide salir (ingresando 'S' o 's'), 
+ * se devuelve null.
+ *
+ * @return Usuario - El objeto Usuario autenticado si el inicio de sesión es exitoso, 
+ *                   o null si el usuario elige salir del proceso.
+ */
     public Usuario iniciarSesion() {
         Scanner sc = new Scanner(System.in);
         Usuario usuarioActual = null;
