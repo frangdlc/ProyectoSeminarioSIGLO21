@@ -13,10 +13,10 @@ import sistemaganadero.modelo.Categoria;
  *
  * @author Usuario
  */
-public class MockSubcategoriaDAO {
+public class MockSubcategoriaDAO implements ISubcategoriaDAO {
     private List<Subcategoria> subcategorias;
 
-    public MockSubcategoriaDAO(MockCategoriaDAO mockCategoriaDAO) {
+    public MockSubcategoriaDAO(ICategoriaDAO mockCategoriaDAO) {
         subcategorias = new ArrayList<>();
 
         // Asociar subcategorías a las categorías simuladas

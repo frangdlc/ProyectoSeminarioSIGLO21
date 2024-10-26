@@ -15,7 +15,7 @@ import java.util.List;
  *
  * @author Usuario
  */
-public class MockUsuarioDAO {
+public class MockUsuarioDAO implements IUsuarioDAO{
         private List<Usuario> usuarios;
 
     public MockUsuarioDAO() {

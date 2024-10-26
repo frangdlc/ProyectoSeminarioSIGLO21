@@ -11,7 +11,7 @@ import sistemaganadero.modelo.Establecimiento;
  *
  * @author Usuario
  */
-public class MockEstablecimientoDAO {
+public class MockEstablecimientoDAO implements IEstablecimientoDAO {
     private List<Establecimiento> establecimientos;
 
     public MockEstablecimientoDAO() {

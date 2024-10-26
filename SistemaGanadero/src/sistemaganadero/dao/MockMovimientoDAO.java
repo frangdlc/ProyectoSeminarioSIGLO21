@@ -13,10 +13,10 @@ import java.util.List;
  *
  * @author Usuario
  */
-public class MockMovimientoDAO {
+public class MockMovimientoDAO implements IMovimientoDAO {
         private List<Movimiento> movimientos = new ArrayList<>();
 
-    public MockMovimientoDAO(MockEstablecimientoDAO mockEstablecimientoDAO, MockSubcategoriaDAO mockSubcategoriaDAO) {
+    public MockMovimientoDAO(IEstablecimientoDAO mockEstablecimientoDAO, ISubcategoriaDAO mockSubcategoriaDAO) {
         // Simular algunos movimientos ya cargados
         movimientos.add(new Movimiento(1, 10, Date.valueOf("2024-01-01"), mockEstablecimientoDAO.obtenerEstablecimiento(1), mockSubcategoriaDAO.obtenerSubcategoria(1)));
         movimientos.add(new Movimiento(2, 15, Date.valueOf("2024-02-01"), mockEstablecimientoDAO.obtenerEstablecimiento(1), mockSubcategoriaDAO.obtenerSubcategoria(2)));

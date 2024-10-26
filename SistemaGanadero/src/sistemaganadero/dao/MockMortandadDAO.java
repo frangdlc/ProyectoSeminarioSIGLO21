@@ -15,10 +15,10 @@ import sistemaganadero.modelo.Movimiento;
  *
  * @author Usuario
  */
-public class MockMortandadDAO {
+public class MockMortandadDAO implements IMortandadDAO {
     private List<Mortandad> mortandades = new ArrayList<>();
 
-    public MockMortandadDAO(MockMovimientoDAO mockMovimientoDAO) {
+    public MockMortandadDAO(IMovimientoDAO mockMovimientoDAO) {
         // Relacionar las mortandades con los movimientos
         Movimiento movimiento1 = mockMovimientoDAO.obtenerMovimientos().get(0);
         Movimiento movimiento2 = mockMovimientoDAO.obtenerMovimientos().get(1);

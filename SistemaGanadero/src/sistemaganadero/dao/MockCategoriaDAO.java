@@ -12,7 +12,7 @@ import sistemaganadero.modelo.Categoria;
  *
  * @author Usuario
  */
-public class MockCategoriaDAO {
+public class MockCategoriaDAO implements ICategoriaDAO {
     private List<Categoria> categorias;
 
     public MockCategoriaDAO() {

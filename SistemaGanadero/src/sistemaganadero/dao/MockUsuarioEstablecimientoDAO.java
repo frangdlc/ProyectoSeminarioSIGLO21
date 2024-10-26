@@ -13,7 +13,7 @@ import java.util.Map;
  *
  * @author Usuario
  */
-public class MockUsuarioEstablecimientoDAO {
+public class MockUsuarioEstablecimientoDAO implements IUsuarioEstablecimientoDAO{
        // Simula la relación muchos a muchos: usuario_id -> lista de establecimiento_id
     private Map<Integer, List<Integer>> usuarioEstablecimientos;
 
@@ -47,7 +47,6 @@ public class MockUsuarioEstablecimientoDAO {
 
     // Método para obtener los establecimientos de un usuario
     public List<Integer> obtenerEstablecimientosPorUsuario(int usuarioId) {
-        System.out.println(usuarioId);
         return usuarioEstablecimientos.getOrDefault(usuarioId, new ArrayList<>());
     }
 }
