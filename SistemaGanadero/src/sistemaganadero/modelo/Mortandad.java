@@ -17,7 +17,7 @@ public class Mortandad extends Movimiento{
     private int id;
     private String causa;
     private String numeroTrazabilidad;
-    private Movimiento movimiento; // Relación con Movimiento
+    private Movimiento movimiento;
 
     public Mortandad(int id, String causa, String numeroTrazabilidad, Movimiento movimiento, int cantidad, Date fecha, Establecimiento establecimiento, Subcategoria subcategoria) {
         super(id,cantidad, fecha, establecimiento, subcategoria);

@@ -4,6 +4,7 @@
  */
 package sistemaganadero.view;
 
+import exceptions.OptionNotAvailable;
 import java.util.Scanner;
 import sistemaganadero.controller.ControllerInforme;
 import sistemaganadero.modelo.Establecimiento;
@@ -29,27 +30,59 @@ public class ViewInformes {
 * @param establecimiento El establecimiento para el cual se desea generar el informe.
 * @param viewMortandad La vista encargada de mostrar el informe de mortandad.
 */
-    public void mostrarMenuInformes(Establecimiento establecimiento, ViewMortandad viewMortandad) {
-        Scanner sc = new Scanner(System.in);
-        int opcionInforme;
+public void mostrarMenuInformes(Establecimiento establecimiento, ViewMortandad viewMortandad) {
+    Scanner sc = new Scanner(System.in);
+    int opcionInforme = -1;
 
-        do {
-            System.out.println("    Menu de Informes    ");
-            System.out.println("1) Informe de mortandad por fechas");
-            System.out.println("0) Volver");
-            System.out.print("Seleccione una opción: ");
-            opcionInforme = sc.nextInt();
+    do {
+        mostrarMenuInformes();
+        opcionInforme = solicitarOpcionInforme(sc);
 
-            switch (opcionInforme) {
-                case 1:
-                    viewMortandad.mostrarInformeMortandad(establecimiento);
-                    break;
-                case 0:
-                    System.out.println("Volviendo al menú principal...");
-                    break;
-                default:
-                    System.out.println("Opción inválida.");
+        switch (opcionInforme) {
+            case 1:
+                controller.mostrarInformeMortandad(establecimiento);
+                break;
+            case 0:
+                System.out.println("Volviendo al menú principal...");
+                break;
+            default:
+                System.out.println("Opción no válida.");
+        }
+    } while (opcionInforme != 0);
+}
+
+/**
+ * Muestra las opciones del menú de informes en la consola.
+ */
+private void mostrarMenuInformes() {
+    System.out.println("    Menu de Informes    ");
+    System.out.println("1) Informe de mortandad por fechas");
+    System.out.println("0) Volver");
+}
+
+/**
+ * Solicita al usuario que seleccione una opción del menú de informes.
+ * Este método asegura que la opción ingresada sea un número válido dentro del rango permitido.
+ *
+ * @param sc El escáner utilizado para leer la entrada del usuario.
+ * @return int La opción seleccionada por el usuario.
+ */
+private int solicitarOpcionInforme(Scanner sc) {
+    int opcion = -1;
+    while (true) {
+        System.out.print("Seleccione una opción: ");
+        if (sc.hasNextInt()) {
+            opcion = sc.nextInt();
+            if (opcion >= 0 && opcion <= 1) {
+                break;
+            } else {
+                System.out.println("Opción inválida, debe ser 0 o 1.");
             }
-        } while (opcionInforme != 0);
+        } else {
+            System.out.println("Por favor, ingrese un número válido.");
+            sc.next();
+        }
     }
+    return opcion;
+}
 }

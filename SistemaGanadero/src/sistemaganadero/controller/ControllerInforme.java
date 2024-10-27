@@ -10,6 +10,7 @@ import sistemaganadero.dao.IMortandadDAO;
 import sistemaganadero.dao.MockMortandadDAO;
 import sistemaganadero.modelo.Mortandad;
 import sistemaganadero.modelo.Establecimiento;
+import sistemaganadero.view.ViewMortandad;
 
 /**
  * Esta clase actúa como controlador en el patrón MVC (Modelo-Vista-Controlador) para gestionar la lógica relacionada con informes de mortandad. 
@@ -36,7 +37,16 @@ public class ControllerInforme {
 * @param establecimiento El establecimiento para el cual se desea obtener los datos de mortandad.
 * @return List<Mortandad> Lista de mortandades que cumplen con los criterios especificados.
 */
-    public List<Mortandad> obtenerMortandadesPorFechasYEstablecimiento(Date desde, Date hasta, Establecimiento establecimiento) {
+public List<Mortandad> obtenerMortandadesPorFechasYEstablecimiento(Date desde, Date hasta, Establecimiento establecimiento) {
+        if (desde.after(hasta)) {
+            throw new IllegalArgumentException("La fecha 'desde' no puede ser mayor que la fecha 'hasta'.");
+        }
         return mortandadDAO.obtenerMortandadesPorFechasYEstablecimiento(desde, hasta, establecimiento);
+    }
+
+
+    public void mostrarInformeMortandad(Establecimiento establecimiento) {
+        ViewMortandad viewMortandad = new ViewMortandad(this);
+        viewMortandad.mostrarInformeMortandad(establecimiento);
     }
 }

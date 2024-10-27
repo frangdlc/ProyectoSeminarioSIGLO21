@@ -14,12 +14,12 @@ import sistemaganadero.modelo.Establecimiento;
  * @author Francisco de la Cruz v1.0
  */
 public class ViewMenuPrincipal {
-    private ViewCategoria categoriaView;
+    private ViewCategoria viewCategoria;
     private ViewInformes viewInformes;
     private ViewMortandad viewMortandad;
 
-    public ViewMenuPrincipal(ViewCategoria categoriaView, ViewInformes viewInformes, ViewMortandad viewMortandad) {
-        this.categoriaView = categoriaView;
+    public ViewMenuPrincipal(ViewCategoria viewCategoria, ViewInformes viewInformes, ViewMortandad viewMortandad) {
+        this.viewCategoria = viewCategoria;
         this.viewInformes = viewInformes;
         this.viewMortandad = viewMortandad;
     }
@@ -42,7 +42,7 @@ public class ViewMenuPrincipal {
 
             switch (opcion) {
                 case 1:
-                    categoriaView.mostrarMenuCategoria(usuarioActual);
+                    viewCategoria.mostrarMenuCategoria(usuarioActual);
                     break;
                 case 2:
                     System.out.println("Movimientos aún no implementado.");

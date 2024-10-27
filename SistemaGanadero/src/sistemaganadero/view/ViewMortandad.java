@@ -25,6 +25,7 @@ public class ViewMortandad {
     public ViewMortandad(ControllerInforme controller) {
         this.controller = controller;
     }
+    
 /**
 * Muestra el informe de mortandad para un establecimiento en un rango de fechas.
 * 
@@ -33,36 +34,72 @@ public class ViewMortandad {
 * 
 * @param establecimiento El establecimiento para el cual se desea obtener el informe de mortandad.
 */
-    public void mostrarInformeMortandad(Establecimiento establecimiento) {
-        Scanner sc = new Scanner(System.in);
-        
-        System.out.print("Ingrese fecha desde (YYYY-MM-DD): ");
-        Date desde = Date.valueOf(sc.next());
-        
-        System.out.print("Ingrese fecha hasta (YYYY-MM-DD): ");
-        Date hasta = Date.valueOf(sc.next());
+public void mostrarInformeMortandad(Establecimiento establecimiento) {
+    Scanner sc = new Scanner(System.in);
+    Date desde = null;
+    Date hasta = null;
 
-        List<Mortandad> mortandades = controller.obtenerMortandadesPorFechasYEstablecimiento(desde, hasta, establecimiento);
+    // Bucle para ingresar la fecha "desde"
+    while (desde == null) {
+        System.out.print("Ingrese fecha desde (YYYY-MM-DD) o 'S' para salir: ");
+        String inputDesde = sc.next();
 
-        if (mortandades.isEmpty()) {
-            System.out.println("No se encontraron datos de mortandad para las fechas indicadas.");
-        } else {
-            System.out.println("--------Mortandades encontradas para el Establecimiento: " + establecimiento.getNombre() + " --------");
-            
-            for (Mortandad mortandad : mortandades) {
+        if (inputDesde.equalsIgnoreCase("S")) {
+            System.out.println("Saliendo de la opción de informe de mortandad.");
+            return; // Sale del método si el usuario elige "S"
+        }
+
+        try {
+            desde = Date.valueOf(inputDesde); // Intenta convertir la fecha
+        } catch (IllegalArgumentException e) {
+            System.out.println("Formato de fecha inválido. Asegúrese de ingresar la fecha en el formato YYYY-MM-DD.");
+        }
+    }
+
+    // Bucle para ingresar la fecha "hasta"
+    while (hasta == null) {
+        System.out.print("Ingrese fecha hasta (YYYY-MM-DD) o 'S' para salir: ");
+        String inputHasta = sc.next();
+
+        if (inputHasta.equalsIgnoreCase("S")) {
+            System.out.println("Saliendo de la opción de informe de mortandad.");
+            return; // Sale del método si elige "S"
+        }
+
+        try {
+            hasta = Date.valueOf(inputHasta); // Intenta convertir la fecha
+
+            // Verificar que "hasta" no sea menor que "desde"
+            if (hasta.before(desde)) {
+                System.out.println("La fecha 'hasta' no puede ser anterior a la fecha 'desde'. Por favor, ingrese nuevamente.");
+                hasta = null; // Reiniciar "hasta" para volver a pedir la fecha
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println("Formato de fecha inválido. Asegúrese de ingresar la fecha en el formato YYYY-MM-DD.");
+        }
+    }
+
+    // Obtener mortandades entre las fechas dadas para el establecimiento
+    List<Mortandad> mortandades = controller.obtenerMortandadesPorFechasYEstablecimiento(desde, hasta, establecimiento);
+
+    if (mortandades.isEmpty()) {
+        System.out.println("No se encontraron datos de mortandad para las fechas indicadas.");
+    } else {
+        System.out.println("-------- Mortandades encontradas para el Establecimiento: " + establecimiento.getNombre() + " --------");
+
+        for (Mortandad mortandad : mortandades) {
                 System.out.println("ID Movimiento: " + mortandad.getId());
                 System.out.println("Fecha: " + mortandad.getFecha());
                 System.out.println("Causa: " + mortandad.getCausa());
                 System.out.println("N° Trazabilidad: " + mortandad.getNumeroTrazabilidad());
-                
-                // Información del movimiento y subcategoría
+
                 Movimiento movimiento = mortandad.getMovimiento();
                 Subcategoria subcategoria = movimiento.getSubcategoria();
 
-                // Imprimir nombre de la subcategoría
+                // Imprimir información de la subcategoría
                 System.out.println("Subcategoría: " + subcategoria.getNombre());
 
-                // Obtener y imprimir la categoría de la subcategoría
+                // Obtener e imprimir la categoría de la subcategoría
                 Categoria categoria = subcategoria.getCategoria();
                 System.out.println("Categoría: " + categoria.getNombre());
 

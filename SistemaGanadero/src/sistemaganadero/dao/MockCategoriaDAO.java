@@ -19,7 +19,7 @@ public class MockCategoriaDAO implements ICategoriaDAO {
     public MockCategoriaDAO() {
         categorias = new ArrayList<>();
 
-        // Agregamos categorías simuladas
+        // Agregar categorías simuladas
         categorias.add(new Categoria(1, "Toros", "descripcion Toros"));
         categorias.add(new Categoria(2, "Vacas", "descripcion Vacas"));
         categorias.add(new Categoria(3, "Novillos", "descripcion Novillos"));

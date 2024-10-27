@@ -94,7 +94,7 @@ public class SistemaGanadero {
                 // Mostrar menú principal
                 viewMenuPrincipal.mostrarMenuPrincipal(usuarioActual, establecimientoActual);
             } else {
-                System.out.println("No seleccionó un establecimiento. Volviendo al inicio.");
+                System.out.println("Cerrando sesion...");
             }
         } else {
             System.out.println("Saliendo del sistema...");
