@@ -26,9 +26,17 @@ public class Categoria {
         this.subcategorias =  new ArrayList<>();
     }
     
+    public Categoria(String nombre, String descripcion) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+    }
+    
     // Llamada al constructor principal
     public Categoria(int id, String nombre, String descripcion) {
         this(id, nombre, descripcion, new ArrayList<>());
+    }
+
+    public Categoria() {
     }
 
     public List<Subcategoria> getSubcategorias() {

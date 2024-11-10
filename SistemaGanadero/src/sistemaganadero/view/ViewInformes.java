@@ -30,10 +30,10 @@ public class ViewInformes {
 * @param establecimiento El establecimiento para el cual se desea generar el informe.
 * @param viewMortandad La vista encargada de mostrar el informe de mortandad.
 */
-public void mostrarMenuInformes(Establecimiento establecimiento, ViewMortandad viewMortandad) {
+public void mostrarMenuInformes(Establecimiento establecimiento) {
     Scanner sc = new Scanner(System.in);
     int opcionInforme = -1;
-
+    
     do {
         mostrarMenuInformes();
         opcionInforme = solicitarOpcionInforme(sc);
@@ -55,11 +55,13 @@ public void mostrarMenuInformes(Establecimiento establecimiento, ViewMortandad v
  * Muestra las opciones del menú de informes en la consola.
  */
 private void mostrarMenuInformes() {
-    System.out.println("    Menu de Informes    ");
-    System.out.println("1) Informe de mortandad por fechas");
-    System.out.println("0) Volver");
+    System.out.println("╔══════════════════════════════════════════╗");
+    System.out.println("║            Menu de Informes        ║");
+    System.out.println("╠══════════════════════════════════════════╣");
+    System.out.println("║ 1) Informe de mortandad por fechas ║");
+    System.out.println("║ 0) Volver                          ║");
+    System.out.println("╚══════════════════════════════════════════╝");
 }
-
 /**
  * Solicita al usuario que seleccione una opción del menú de informes.
  * Este método asegura que la opción ingresada sea un número válido dentro del rango permitido.

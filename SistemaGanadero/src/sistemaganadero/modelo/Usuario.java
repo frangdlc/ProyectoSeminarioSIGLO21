@@ -21,7 +21,6 @@ public class Usuario {
 	private String cuil;
 	private String email;
 	private String password;
-        private String dni;
         private char sexo;
         private String nombre;
         protected String apellido;
@@ -30,11 +29,10 @@ public class Usuario {
         private Rol rol ;
         private List<Establecimiento> establecimientos;
 
-    public Usuario(String cuil, String email, String password, String dni, char sexo, String nombre, String apellido, Date fechaNacimiento, Boolean activo, Rol rol) {
+    public Usuario(String cuil, String email, String password, char sexo, String nombre, String apellido, Date fechaNacimiento, Boolean activo, Rol rol) {
         this.cuil = cuil;
         this.email = email;
         this.password = password;
-        this.dni = dni;
         this.sexo = sexo;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -43,12 +41,11 @@ public class Usuario {
         this.rol = rol;
     }
 
-    public Usuario(int id, String cuil, String email, String password, String dni, char sexo, String nombre, String apellido, Date fechaNacimiento, Boolean activo, Rol rol) {
+    public Usuario(int id, String cuil, String email, String password, char sexo, String nombre, String apellido, Date fechaNacimiento, Boolean activo, Rol rol) {
         this.id = id;
         this.cuil = cuil;
         this.email = email;
         this.password = password;
-        this.dni = dni;
         this.sexo = sexo;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -89,15 +86,7 @@ public class Usuario {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public String getDni() {
-        return dni;
-    }
-
-    public void setDni(String dni) {
-        this.dni = dni;
-    }
-
+    
     public char getSexo() {
         return sexo;
     }

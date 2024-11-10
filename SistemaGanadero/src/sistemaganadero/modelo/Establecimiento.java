@@ -16,29 +16,29 @@ import java.util.List;
 public class Establecimiento {
     private int id;
     private String nombre;
-    private int cantidadHectares; 
+    private int cantidadHectareas; 
     private List<Potrero> potreros;
     private List<Usuario> usuarios;
 
-    public Establecimiento(int id, String nombre, int cantidadHectares, List<Potrero> potreros, List<Usuario> usuarios) {
+    public Establecimiento(int id, String nombre, int cantidadHectareas, List<Potrero> potreros, List<Usuario> usuarios) {
         this.id = id;
         this.nombre = nombre;
-        this.cantidadHectares = cantidadHectares;
+        this.cantidadHectareas = cantidadHectareas;
         this.potreros = potreros;
         this.usuarios = new ArrayList<>();
     }
 
-    public Establecimiento(int id, String nombre, int cantidadHectares, List<Potrero> potreros) {
+    public Establecimiento(int id, String nombre, int cantidadHectareas, List<Potrero> potreros) {
         this.id = id;
         this.nombre = nombre;
-        this.cantidadHectares = cantidadHectares;
+        this.cantidadHectareas = cantidadHectareas;
         this.potreros =  new ArrayList<>();
     }
 
-    public Establecimiento(int id, String nombre, int cantidadHectares) {
+    public Establecimiento(int id, String nombre, int cantidadHectareas) {
         this.id = id;
         this.nombre = nombre;
-        this.cantidadHectares = cantidadHectares;
+        this.cantidadHectareas = cantidadHectareas;
     }
 
     public Establecimiento(int id, String nombre) {
@@ -70,12 +70,12 @@ public class Establecimiento {
         this.nombre = nombre;
     }
 
-    public int getCantidadHectares() {
-        return cantidadHectares;
+    public int getCantidadHectareas() {
+        return cantidadHectareas;
     }
 
-    public void setCantidadHectares(int cantidadHectares) {
-        this.cantidadHectares = cantidadHectares;
+    public void setCantidadHectareas(int cantidadHectareas) {
+        this.cantidadHectareas = cantidadHectareas;
     }
     
 }

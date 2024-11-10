@@ -7,10 +7,9 @@ package sistemaganadero.controller;
 import java.util.List;
 import sistemaganadero.dao.ICategoriaDAO;
 import sistemaganadero.dao.ISubcategoriaDAO;
-import sistemaganadero.dao.MockCategoriaDAO;
-import sistemaganadero.dao.MockSubcategoriaDAO;
 import sistemaganadero.modelo.Categoria;
 import sistemaganadero.modelo.Subcategoria;
+import sistemaganadero.dao.CategoriaDAO;
 
 /**
  * Esta clase actúa como controlador en el patrón MVC (Modelo-Vista-Controlador) para gestionar a lógica relacionada con las categorías y subcategorías. 
@@ -19,17 +18,19 @@ import sistemaganadero.modelo.Subcategoria;
  * @author Francisco de la Cruz v1.0
  */
 public class ControllerCategoria {
-    private ICategoriaDAO mockCategoriaDAO;
-    private ISubcategoriaDAO mockSubcategoriaDAO;
+    private ICategoriaDAO categoriaDAO;
+    private ISubcategoriaDAO subcategoriaDAO;
     
+    public ControllerCategoria(ICategoriaDAO categoriaDAO, ISubcategoriaDAO subcategoriaDAO) {
+        this.categoriaDAO = categoriaDAO;
+        this.subcategoriaDAO = subcategoriaDAO;
+    }
     public ControllerCategoria() {
     }
     
-    public ControllerCategoria(ICategoriaDAO mockCategoriaDAO, ISubcategoriaDAO mockSubcategoriaDAO) {
-        this.mockCategoriaDAO = mockCategoriaDAO;
-        this.mockSubcategoriaDAO = mockSubcategoriaDAO;
+    public ControllerCategoria(ICategoriaDAO categoriaDAO) {
+        this.categoriaDAO = categoriaDAO;
     }
-    
 /**
 * Este método crea una nueva categoría con un ID único, nombre y descripción, y la agrega
 * a la lista de categorías utilizando el DAO correspondiente.
@@ -38,8 +39,8 @@ public class ControllerCategoria {
 * @param descripcion Descripción de la nueva categoría.
 */
     public void agregarCategoria(String nombre, String descripcion) {
-        int idNuevo = mockCategoriaDAO.obtenerCategorias().size() + 1;
-        mockCategoriaDAO.agregarCategoria(new Categoria(idNuevo, nombre, descripcion));
+        Categoria nuevaCategoria = new Categoria(nombre, descripcion);
+        categoriaDAO.agregarCategoria(nuevaCategoria);
     }
     
 /** 
@@ -51,7 +52,7 @@ public class ControllerCategoria {
 * @param nuevaDescripcion Nueva descripción para la categoría.
 */
     public void modificarCategoria(int id, String nuevoNombre, String nuevaDescripcion) {
-        mockCategoriaDAO.modificarCategoria(id, nuevoNombre, nuevaDescripcion);
+        categoriaDAO.modificarCategoria(id, nuevoNombre, nuevaDescripcion);
     }
     
 /**
@@ -61,7 +62,7 @@ public class ControllerCategoria {
 * @param id ID de la categoría a eliminar.
 */
     public void eliminarCategoria(int id) {
-        mockCategoriaDAO.eliminarCategoria(id);
+        categoriaDAO.eliminarCategoria(id);
     }
 
 /**
@@ -71,7 +72,7 @@ public class ControllerCategoria {
 * @return List<Categoria> Lista de categorías.
 */    
     public List<Categoria> obtenerCategorias() {
-        return mockCategoriaDAO.obtenerCategorias();
+        return categoriaDAO.obtenerCategorias();
     }
 
 /**
@@ -82,14 +83,9 @@ public class ControllerCategoria {
 * @param id ID de la categoría a buscar.
 * @return Categoria La categoría correspondiente al ID, o null si no se encuentra.
 */
-    public Categoria obtenerCategoriaPorId(int id) {
-        for (Categoria categoria : mockCategoriaDAO.obtenerCategorias()) {
-            if (categoria.getId() == id) {
-                return categoria;
-            }
-        }
-        return null;
-    }
+public Categoria obtenerCategoriaPorId(int id) {
+    return categoriaDAO.obtenerCategoriaPorId(id);
+}
 
 /**
 * Obtiene una lista de subcategorías asociadas a una categoría específica.
@@ -99,6 +95,6 @@ public class ControllerCategoria {
 * @return List<Subcategoria> Lista de subcategorías asociadas a la categoría especificada.
 */
     public List<Subcategoria> obtenerSubcategoriasPorCategoria(Categoria categoria) {
-        return mockSubcategoriaDAO.obtenerSubcategoriasPorCategoria(categoria);
+        return subcategoriaDAO.obtenerSubcategoriasPorCategoria(categoria);
     }
 }

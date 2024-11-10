@@ -21,7 +21,16 @@ public class Subcategoria {
         this.nombre = nombre;
         this.categoria = categoria;
     }
+    
 
+    public Subcategoria() {
+    }
+    
+    public Subcategoria(String nombre, Categoria categoria) {
+        this.nombre = nombre;
+        this.categoria = categoria;
+    }
+    
     public int getId() {
         return id;
     }

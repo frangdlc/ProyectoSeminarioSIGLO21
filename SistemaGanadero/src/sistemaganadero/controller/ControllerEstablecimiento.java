@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import sistemaganadero.dao.IEstablecimientoDAO;
 import sistemaganadero.dao.IUsuarioEstablecimientoDAO;
-import sistemaganadero.dao.MockEstablecimientoDAO;
-import sistemaganadero.dao.MockUsuarioEstablecimientoDAO;
 import sistemaganadero.modelo.Establecimiento;
 
 /**
@@ -27,20 +25,19 @@ public class ControllerEstablecimiento {
     }
     
 /**
-* Obtiene una lista de establecimientos asociados a un usuario específico.
+* Permite al usuario seleccionar un establecimiento.
 * 
-* Este método utiliza el DAO de usuario-establecimiento para recuperar los IDs de los establecimientos asociados al usuario, 
-* y luego utiliza el DAO de establecimiento para obtener los detalles de cada establecimiento.
+* Este método utiliza la vista de establecimiento para permitir que el usuario actual seleccione uno de los establecimientos asociados a su cuenta.
 * 
-* @param usuarioId ID del usuario para el cual se desea obtener los establecimientos.
-* @param usuarioEstablecimientoDAO Interfaz para acceder a la relación entre usuarios y establecimientos.
-* @return List<Establecimiento> Lista de establecimientos asociados al usuario especificado.
+* @param usuarioActual El usuario que está intentando seleccionar un establecimiento.
+* @param viewEstablecimiento La vista que proporciona la interfaz para seleccionar un establecimiento.
+* @return Establecimiento seleccionado por el usuario; puede ser null si no se selecciona ninguno.
 */
 
     public List<Establecimiento> obtenerEstablecimientosPorUsuario(int usuarioId, IUsuarioEstablecimientoDAO usuarioEstablecimientoDAO) {
         List<Integer> idsEstablecimientos = usuarioEstablecimientoDAO.obtenerEstablecimientosPorUsuario(usuarioId);
         List<Establecimiento> establecimientos = new ArrayList<>();
-        
+
         for (Integer id : idsEstablecimientos) {
             Establecimiento est = establecimientoDAO.obtenerEstablecimiento(id);
             if (est != null) {

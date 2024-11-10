@@ -5,6 +5,7 @@
 package sistemaganadero.view;
 
 import exceptions.OptionNotAvailable;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import sistemaganadero.controller.ControllerCategoria;
@@ -47,10 +48,7 @@ public void mostrarMenuCategoria(Usuario usuarioActual) {
     if (usuarioActual.getRol().getNombre().equalsIgnoreCase("Dueño")) {
         do {
             try {
-                // Mostrar el menú de categorías
                 mostrarMenuCategoriaOpciones();
-
-                // Solicitar opción del usuario
                 opcionCategoria = solicitarOpcionCategoria(sc);
 
                 switch (opcionCategoria) {
@@ -88,14 +86,15 @@ public void mostrarMenuCategoria(Usuario usuarioActual) {
 * Este método imprime las diferentes acciones disponibles para el usuario.
 */
 private void mostrarMenuCategoriaOpciones() {
-    System.out.println("--------------------------");
-    System.out.println("    Menu Categoria    ");
-    System.out.println("1) Agregar categoria");
-    System.out.println("2) Modificar categoria");
-    System.out.println("3) Eliminar categoria");
-    System.out.println("4) Listar categorias");
-    System.out.println("0) Volver");
-    System.out.println("--------------------------");
+    System.out.println("╔══════════════════════════════════╗");
+    System.out.println("║        Menu de Categoría    ║");
+    System.out.println("╠══════════════════════════════════╣");
+    System.out.println("║ 1) Agregar categoría        ║");
+    System.out.println("║ 2) Modificar categoría      ║");
+    System.out.println("║ 3) Eliminar categoría       ║");
+    System.out.println("║ 4) Listar categorías        ║");
+    System.out.println("║ 0) Volver                   ║");
+    System.out.println("╚══════════════════════════════════╝");
 }
 
 /**
@@ -113,15 +112,15 @@ private int solicitarOpcionCategoria(Scanner sc) {
         System.out.print("Seleccione una opción: ");
         if (sc.hasNextInt()) {
             opcion = sc.nextInt();
-            sc.nextLine(); // Limpiar el buffer
+            sc.nextLine();
             if (opcion >= 0 && opcion <= 4) {
-                break; // Opción válida
+                break; 
             } else {
                 System.out.println("Opción inválida, debe ser entre 0 y 4.");
             }
         } else {
             System.out.println("Por favor, ingrese un número válido.");
-            sc.next(); // Limpiar el buffer
+            sc.next();
         }
     }
     return opcion;
@@ -137,7 +136,6 @@ private void agregarCategoria() {
     System.out.print("Ingrese la descripción de la nueva categoria: ");
     String descripcion = sc.nextLine();
     controllerCategoria.agregarCategoria(nombre, descripcion);
-    System.out.println("Categoría agregada.");
 }
 
 /**
@@ -146,52 +144,71 @@ private void agregarCategoria() {
 * y luego permite al usuario ingresar nuevos valores para el nombre y la descripción.
 */
 private void modificarCategoria() {
+    // Listar las categorías disponibles
     listarCategorias();
-    System.out.print("Seleccione el ID de la categoría a modificar: ");
-    int id = sc.nextInt();
-    sc.nextLine(); // Limpiar el buffer
 
-    Categoria categoria = controllerCategoria.obtenerCategoriaPorId(id);
+    // Pedir al usuario que seleccione la categoría a modificar
+    System.out.print("Seleccione el número de la categoría que desea modificar: ");
+    int idCategoria = sc.nextInt();
+    sc.nextLine();
 
+    // Obtener la categoría seleccionada
+    Categoria categoria = controllerCategoria.obtenerCategoriaPorId(idCategoria);
+    
     if (categoria == null) {
-        System.out.println("ID no encontrado.");
+        System.out.println("Categoría no encontrada.");
         return;
     }
 
-    // Mostrar los valores actuales
-    System.out.println("Valores actuales:");
-    System.out.println("Nombre actual: " + categoria.getNombre());
+    // Mostrar los detalles actuales de la categoría
+    System.out.println("Categoría seleccionada: " + categoria.getNombre());
     System.out.println("Descripción actual: " + categoria.getDescripcion());
 
-    // Permitir ingresar nuevos valores
-    System.out.print("Ingrese el nuevo nombre (o presione Enter para mantener el actual): ");
-    String nombre = sc.nextLine();
-    if (nombre.isEmpty()) {
-        nombre = categoria.getNombre(); // Mantener el nombre actual
+    // Pedir al usuario que ingrese el nuevo nombre o descripción
+    System.out.print("Ingrese el nuevo nombre (o 's' para cancelar, o 'Enter' para mantener el actual): ");
+    String nuevoNombre = sc.nextLine();
+    if (nuevoNombre.equalsIgnoreCase("s")) {
+        System.out.println("Operación cancelada.");
+        return;
+    }
+    // Mantener el nombre actual si el campo está vacío
+    if (nuevoNombre.isEmpty()) {
+        nuevoNombre = categoria.getNombre();
     }
 
-    System.out.print("Ingrese la nueva descripción (o presione Enter para mantener la actual): ");
-    String descripcion = sc.nextLine();
-    if (descripcion.isEmpty()) {
-        descripcion = categoria.getDescripcion(); // Mantener la descripción actual
+    System.out.print("Ingrese la nueva descripción (o 's' para cancelar, o 'Enter' para mantener la actual): ");
+    String nuevaDescripcion = sc.nextLine();
+    if (nuevaDescripcion.equalsIgnoreCase("s")) {
+        System.out.println("Operación cancelada.");
+        return;
+    }
+    // Mantener la descripción actual si el campo está vacío
+    if (nuevaDescripcion.isEmpty()) {
+        nuevaDescripcion = categoria.getDescripcion();
     }
 
-    controllerCategoria.modificarCategoria(id, nombre, descripcion);
-    System.out.println("Categoría modificada.");
+    // Modificar la categoría
+    controllerCategoria.modificarCategoria(idCategoria, nuevoNombre, nuevaDescripcion);
+
+    categoria = null;
 }
-
 /**
 * Elimina una categoría existente a través de la entrada del usuario.
 * Este método lista las categorías disponibles y solicita al usuario que seleccione una categoría para eliminar.
 */
-    private void eliminarCategoria() {
-        listarCategorias();
-        System.out.print("Seleccione el ID de la categoría a eliminar: ");
-        int id = sc.nextInt();
-        controllerCategoria.eliminarCategoria(id);
-        System.out.println("Categoría eliminada.");
+private void eliminarCategoria() {
+    listarCategorias();  // Muestra la lista de categorías con sus IDs
+    System.out.print("Seleccione el nº de la categoría a eliminar: ");
+    int id = sc.nextInt();
+    sc.nextLine(); // Limpiar el buffer
+    // Validar que la categoría exista
+    Categoria categoria = controllerCategoria.obtenerCategoriaPorId(id);
+    if (categoria == null) {
+        System.out.println("Categoría no encontrada. Operación cancelada.");
+        return;
     }
-    
+    controllerCategoria.eliminarCategoria(id);
+}
 /**
 * Lista las categorías disponibles en la aplicación.
 * Este método utiliza el controlador para obtener la lista de categorías y luego las imprime en la consola.
@@ -203,7 +220,7 @@ private void modificarCategoria() {
             System.out.println("No hay categorías disponibles.");
         } else {
             for (Categoria categoria : categorias) {
-                System.out.println("ID: " + categoria.getId() + " - " + categoria.getNombre());
+                System.out.println("Nro: " + categoria.getId() + " - " + categoria.getNombre());
             }
         }
     }
@@ -212,29 +229,60 @@ private void modificarCategoria() {
 * Lista las categorías con detalles adicionales.
 * Este método lista las categorías disponibles y permite al usuario seleccionar una categoría para ver sus detalles, incluyendo sus subcategorías.
 */
-    private void listarCategoriasConDetalles() {
-        listarCategorias();
-        System.out.print("Seleccione el ID de la categoría para ver detalles o 0 para volver: ");
-        int id = sc.nextInt();
+private void listarCategoriasConDetalles() {
+    int id = -1; // Inicializar id con un valor no válido
+    listarCategorias(); // Muestra la lista de categorías
+
+    do {
+        System.out.println("╔══════════════════════════════════════════════════╗");
+        System.out.println("           Seleccion de categoria           ");
+        System.out.println("╠══════════════════════════════════════════════════╣");
+        System.out.print("║ Seleccione el ID de la categoría para ver detalles (0 para volver): ");
+        
+        // Validar la entrada del usuario
+        while (true) {
+            try {
+                id = sc.nextInt(); // Intentar leer el número
+                sc.nextLine();
+                if (id >= 0) {
+                    break; // Salir del bucle si la entrada es válida
+                } else {
+                    System.out.println("║   Ingrese un número válido (0 o un ID positivo).");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("║️  Entrada inválida. Ingrese un número.");
+                sc.next();
+            }
+        }
 
         if (id != 0) {
             Categoria categoria = controllerCategoria.obtenerCategoriaPorId(id);
             if (categoria != null) {
-                System.out.println("Detalles de la categoría: ");
-                System.out.println("ID: " + categoria.getId());
-                System.out.println("Nombre: " + categoria.getNombre());
-                System.out.println("Descripción: " + categoria.getDescripcion());
-
-                System.out.println("Subcategorías:");
+                System.out.println("╔═══════════════════════════════════════════════════════════════════╗");
+                System.out.println("             Detalles de la categoria seleccionada     ");
+                System.out.println("╠═══════════════════════════════════════════════════════════════════╣");
+                System.out.printf("  ID: %d%n", categoria.getId());
+                System.out.printf("  Nombre: %s%n", categoria.getNombre());
+                System.out.printf("  Descripción: %s%n", categoria.getDescripcion());
+                
+                System.out.println("     ═══════════════════════════════════════════════");
+                System.out.println("  Subcategorías: ");
                 List<Subcategoria> subcategorias = controllerCategoria.obtenerSubcategoriasPorCategoria(categoria);
-                for (Subcategoria subcategoria : subcategorias) {
-                    System.out.println(" - " + subcategoria.getNombre());
+                if (subcategorias.isEmpty()) {
+                    System.out.println("║  No se encontraron subcategorías para esta categoría.");
+                } else {
+                    for (Subcategoria subcategoria : subcategorias) {
+                        System.out.println("  - " + subcategoria.getNombre());
+                    }
                 }
+                System.out.println(" *********═══════════════════**********══════════════════════════════*********");
             } else {
-                System.out.println("ID no encontrado.");
+                System.out.println("╔══════════════════════════════════════════════════╗");
+                System.out.println("║  ID no encontrado. Intente nuevamente.         ║");
+                System.out.println("╚══════════════════════════════════════════════════╝");
             }
         }
-    }
+    } while (id != 0); // Continua hasta que el usuario ingrese 0
 }
-
+}
 

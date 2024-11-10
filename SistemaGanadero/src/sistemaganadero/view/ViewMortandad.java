@@ -21,11 +21,13 @@ import sistemaganadero.modelo.Categoria;
  */
 public class ViewMortandad {
     private ControllerInforme controller;
-
     public ViewMortandad(ControllerInforme controller) {
         this.controller = controller;
     }
+    public ViewMortandad() {
+    }
     
+
 /**
 * Muestra el informe de mortandad para un establecimiento en un rango de fechas.
 * 
@@ -50,7 +52,7 @@ public void mostrarInformeMortandad(Establecimiento establecimiento) {
         }
 
         try {
-            desde = Date.valueOf(inputDesde); // Intenta convertir la fecha
+            desde = Date.valueOf(inputDesde); // Convertir la fecha
         } catch (IllegalArgumentException e) {
             System.out.println("Formato de fecha inválido. Asegúrese de ingresar la fecha en el formato YYYY-MM-DD.");
         }
@@ -67,7 +69,7 @@ public void mostrarInformeMortandad(Establecimiento establecimiento) {
         }
 
         try {
-            hasta = Date.valueOf(inputHasta); // Intenta convertir la fecha
+            hasta = Date.valueOf(inputHasta);
 
             // Verificar que "hasta" no sea menor que "desde"
             if (hasta.before(desde)) {
@@ -80,31 +82,30 @@ public void mostrarInformeMortandad(Establecimiento establecimiento) {
     }
 
     // Obtener mortandades entre las fechas dadas para el establecimiento
-    List<Mortandad> mortandades = controller.obtenerMortandadesPorFechasYEstablecimiento(desde, hasta, establecimiento);
-
+    List<Mortandad> mortandades = controller.obtenerMovimientosMortandad(desde, hasta, establecimiento);
+    
     if (mortandades.isEmpty()) {
         System.out.println("No se encontraron datos de mortandad para las fechas indicadas.");
     } else {
-        System.out.println("-------- Mortandades encontradas para el Establecimiento: " + establecimiento.getNombre() + " --------");
-
+        System.out.println("╔═════════════════════════════════════════════════════════════════════════════════════╗");
+        System.out.println("    Informe de Mortandad para: " + establecimiento.getNombre() + "        ");
+        System.out.println("╠═════════════════════════════════════════════════════════════════════════════════════╣");
         for (Mortandad mortandad : mortandades) {
-                System.out.println("ID Movimiento: " + mortandad.getId());
-                System.out.println("Fecha: " + mortandad.getFecha());
-                System.out.println("Causa: " + mortandad.getCausa());
-                System.out.println("N° Trazabilidad: " + mortandad.getNumeroTrazabilidad());
+            System.out.println("║ ID Movimiento: " + mortandad.getId());
+            System.out.println("║ Fecha: " + mortandad.getFecha());
+            System.out.println("║ Causa: " + mortandad.getCausa());
+            System.out.println("║ N° Trazabilidad: " + mortandad.getNumeroTrazabilidad());
 
-                Movimiento movimiento = mortandad.getMovimiento();
-                Subcategoria subcategoria = movimiento.getSubcategoria();
+            Movimiento movimiento = mortandad.getMovimiento();
+            Subcategoria subcategoria = movimiento.getSubcategoria();
 
-                // Imprimir información de la subcategoría
-                System.out.println("Subcategoría: " + subcategoria.getNombre());
-
-                // Obtener e imprimir la categoría de la subcategoría
-                Categoria categoria = subcategoria.getCategoria();
-                System.out.println("Categoría: " + categoria.getNombre());
-
-                System.out.println("-----------------------------------------");
-            }
+            System.out.println("║ Subcategoría: " + subcategoria.getNombre());
+            Categoria categoria = subcategoria.getCategoria();
+            System.out.println("║ Categoría: " + categoria.getNombre());
+            System.out.println("╠═════════════════════════════════════════════════════════════════════════════╣");
         }
+        System.out.println("╚══════════════════════════════════════════════════════════════════════════════════╝");
+          }
     }
+    
 }

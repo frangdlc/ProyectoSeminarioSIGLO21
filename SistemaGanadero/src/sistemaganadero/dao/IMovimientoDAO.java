@@ -8,6 +8,7 @@ import java.sql.Date;
 import java.util.List;
 import sistemaganadero.modelo.Movimiento;
 import sistemaganadero.modelo.Establecimiento;
+import sistemaganadero.modelo.Mortandad;
 
 /**
  * Esta interfaz define los métodos necesarios para la gestión de movimientos en la capa de acceso a datos. 
@@ -30,5 +31,5 @@ public interface IMovimientoDAO {
      * @param establecimiento El establecimiento del cual se desean obtener los movimientos.
      * @return List<Movimiento> Lista de movimientos que cumplen con los criterios especificados.
      */
-    List<Movimiento> obtenerMovimientosPorFechasYEstablecimiento(Date desde, Date hasta, Establecimiento establecimiento);
+    List<Mortandad> obtenerMovimientosMortandad(Date desde, Date hasta, Establecimiento establecimiento);
 }

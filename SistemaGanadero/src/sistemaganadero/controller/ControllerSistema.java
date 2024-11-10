@@ -3,8 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package sistemaganadero.controller;
-
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
+import sistemaganadero.dao.IUsuarioDAO;
 import sistemaganadero.dao.IUsuarioEstablecimientoDAO;
 import sistemaganadero.modelo.Usuario;
 import sistemaganadero.modelo.Establecimiento;
@@ -17,16 +21,10 @@ import sistemaganadero.view.ViewEstablecimiento;
  * @author Francisco de la Cruz v1.0
  */
 public class ControllerSistema {
-    private List<Usuario> usuarios;
-    private IUsuarioEstablecimientoDAO usuarioEstablecimientoDAO;
+    private IUsuarioDAO usuarioDAO;
 
-    public ControllerSistema(List<Usuario> usuarios, IUsuarioEstablecimientoDAO usuarioEstablecimientoDAO) {
-        this.usuarios = usuarios;
-        this.usuarioEstablecimientoDAO = usuarioEstablecimientoDAO;
-    }
-    
-    public ControllerSistema() {
-
+    public ControllerSistema(IUsuarioDAO usuarioDAO) {
+        this.usuarioDAO = usuarioDAO;
     }
     
 /**
@@ -37,27 +35,14 @@ public class ControllerSistema {
 * @param passwordInput Contraseña ingresada.
 * @return Usuario si las credenciales son válidas; de lo contrario, retorna null.
 */    
-    public Usuario validarLogin(String usuarioInput, String passwordInput) {
-        for (Usuario usuario : usuarios) {
-            if ((usuario.getNombre().equals(usuarioInput) || usuario.getEmail().equals(usuarioInput)) &&
-                    usuario.getPassword().equals(passwordInput)) {
-                return usuario;
-            }
-        }
+
+public Usuario validarLogin(String usuarioInput, String passwordInput) {
+    try {
+        return usuarioDAO.autenticarUsuario(usuarioInput, passwordInput);
+    } catch (SQLException e) {
+        System.err.println("Error al autenticar usuario: " + e.getMessage());
         return null;
     }
+}
 
-    
-/**
-* Permite al usuario seleccionar un establecimiento.
-* 
-* Este método utiliza la vista de establecimiento para permitir que el usuario actual seleccione uno de los establecimientos asociados a su cuenta.
-* 
-* @param usuarioActual El usuario que está intentando seleccionar un establecimiento.
-* @param viewEstablecimiento La vista que proporciona la interfaz para seleccionar un establecimiento.
-* @return Establecimiento seleccionado por el usuario; puede ser null si no se selecciona ninguno.
-*/
-    public Establecimiento seleccionarEstablecimiento(Usuario usuarioActual, ViewEstablecimiento viewEstablecimiento) {
-        return viewEstablecimiento.seleccionarEstablecimiento(usuarioActual.getId(), usuarioEstablecimientoDAO);
-    }
 }

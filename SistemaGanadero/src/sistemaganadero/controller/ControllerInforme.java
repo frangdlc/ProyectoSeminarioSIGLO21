@@ -7,7 +7,7 @@ package sistemaganadero.controller;
 import java.sql.Date;
 import java.util.List;
 import sistemaganadero.dao.IMortandadDAO;
-import sistemaganadero.dao.MockMortandadDAO;
+import sistemaganadero.dao.IMovimientoDAO;
 import sistemaganadero.modelo.Mortandad;
 import sistemaganadero.modelo.Establecimiento;
 import sistemaganadero.view.ViewMortandad;
@@ -18,10 +18,11 @@ import sistemaganadero.view.ViewMortandad;
  * @author Francisco de la Cruz v1.0
  */
 public class ControllerInforme {
-    private IMortandadDAO mortandadDAO;
+    private IMovimientoDAO movimientoDAO;
+    private ControllerInforme informe;
 
-    public ControllerInforme(IMortandadDAO mortandadDAO) {
-        this.mortandadDAO = mortandadDAO;
+    public ControllerInforme(IMovimientoDAO movimientoDAO) {
+        this.movimientoDAO = movimientoDAO;
     }
     
     public ControllerInforme() {
@@ -37,16 +38,15 @@ public class ControllerInforme {
 * @param establecimiento El establecimiento para el cual se desea obtener los datos de mortandad.
 * @return List<Mortandad> Lista de mortandades que cumplen con los criterios especificados.
 */
-public List<Mortandad> obtenerMortandadesPorFechasYEstablecimiento(Date desde, Date hasta, Establecimiento establecimiento) {
-        if (desde.after(hasta)) {
-            throw new IllegalArgumentException("La fecha 'desde' no puede ser mayor que la fecha 'hasta'.");
-        }
-        return mortandadDAO.obtenerMortandadesPorFechasYEstablecimiento(desde, hasta, establecimiento);
-    }
-
-
     public void mostrarInformeMortandad(Establecimiento establecimiento) {
         ViewMortandad viewMortandad = new ViewMortandad(this);
         viewMortandad.mostrarInformeMortandad(establecimiento);
+    }
+
+    public List<Mortandad> obtenerMovimientosMortandad(Date desde, Date hasta, Establecimiento establecimiento) {
+        if (desde.after(hasta)) {
+            throw new IllegalArgumentException("La fecha 'desde' no puede ser mayor que la fecha 'hasta'.");
+        }
+        return movimientoDAO.obtenerMovimientosMortandad(desde, hasta, establecimiento);
     }
 }

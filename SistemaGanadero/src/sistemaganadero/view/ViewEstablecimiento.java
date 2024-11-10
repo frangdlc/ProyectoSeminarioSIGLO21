@@ -26,6 +26,9 @@ public class ViewEstablecimiento {
     public ViewEstablecimiento(ControllerEstablecimiento controller) {
         this.controller = controller;
     }
+
+    public ViewEstablecimiento() {
+    }
     
 /**
 * Permite al usuario seleccionar un establecimiento de una lista de establecimientos disponibles.
@@ -38,8 +41,7 @@ public class ViewEstablecimiento {
 * @param usuarioEstablecimientoDAO El objeto DAO que permite acceder a la relación entre usuarios y establecimientos.
 * @return Establecimiento El establecimiento seleccionado por el usuario, o null si no hay establecimientos disponibles o si el usuario decide salir.    
  */
-   public Establecimiento seleccionarEstablecimiento(int usuarioId, IUsuarioEstablecimientoDAO usuarioEstablecimientoDAO) {
-       
+    public Establecimiento seleccionarEstablecimiento(int usuarioId, IUsuarioEstablecimientoDAO usuarioEstablecimientoDAO) {
         List<Establecimiento> establecimientos = controller.obtenerEstablecimientosPorUsuario(usuarioId, usuarioEstablecimientoDAO);
 
         if (establecimientos.isEmpty()) {
@@ -47,24 +49,25 @@ public class ViewEstablecimiento {
             return null;
         }
 
-        System.out.println("Seleccione un establecimiento:");
-        for (int i = 0; i < establecimientos.size(); i++) {
-            System.out.println((i + 1) + ") " + establecimientos.get(i).getNombre());
-        }
+    System.out.println("╔═════════════════════════════════════════════════════════════════════════════════════════════════╗");
+    System.out.println("║                           Seleccione un establecimiento                           ║");
+    System.out.println("╠═════════════════════════════════════════════════════════════════════════════════════════════════╣");
+    for (int i = 0; i < establecimientos.size(); i++) {
+        System.out.println(" " + (i + 1) + ") " + establecimientos.get(i).getNombre());
+    }
+    System.out.println("╚═════════════════════════════════════════════════════════════════════════════════════════════════╝");
 
         Scanner sc = new Scanner(System.in);
         int seleccion = -1;
-        boolean entradaValida = false;
-
-        while (!entradaValida) {
+        while (true) {
             try {
                 System.out.print("Ingrese el número de establecimiento (o 0 para salir): ");
-                seleccion = Integer.parseInt(sc.nextLine()); // Se usa nextLine() para evitar problemas con entradas no numéricas.
+                seleccion = Integer.parseInt(sc.nextLine());
                 if (seleccion == 0) {
                     return null;
                 }
                 if (seleccion >= 1 && seleccion <= establecimientos.size()) {
-                    entradaValida = true; // Salir del bucle si la entrada es válida.
+                    return establecimientos.get(seleccion - 1);
                 } else {
                     System.out.println("Opción no válida. Vuelva a elegir.");
                 }
@@ -72,7 +75,5 @@ public class ViewEstablecimiento {
                 System.out.println("Error: debe ingresar un número válido.");
             }
         }
-
-        return establecimientos.get(seleccion - 1);
     }
 }

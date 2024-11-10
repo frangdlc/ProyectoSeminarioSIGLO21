@@ -18,10 +18,12 @@ public class ViewMenuPrincipal {
     private ViewInformes viewInformes;
     private ViewMortandad viewMortandad;
 
-    public ViewMenuPrincipal(ViewCategoria viewCategoria, ViewInformes viewInformes, ViewMortandad viewMortandad) {
+    public ViewMenuPrincipal(ViewCategoria viewCategoria, ViewInformes viewInformes ) {
         this.viewCategoria = viewCategoria;
         this.viewInformes = viewInformes;
-        this.viewMortandad = viewMortandad;
+    }
+
+    public ViewMenuPrincipal() {
     }
     
 /**
@@ -48,7 +50,7 @@ public class ViewMenuPrincipal {
                     System.out.println("Movimientos aún no implementado.");
                     break;
                 case 3:
-                    viewInformes.mostrarMenuInformes(establecimientoActual, viewMortandad);
+                    viewInformes.mostrarMenuInformes(establecimientoActual);
                     break;
                 case 4:
                     System.out.println("Cerrando sesión...");
@@ -63,15 +65,16 @@ public class ViewMenuPrincipal {
  * Este método imprime las diferentes opciones disponibles para el usuario,
  * permitiéndole elegir una acción.
  */
-    private void mostrarMenu() {
-        System.out.println("--------------------------");
-        System.out.println("    Menu Principal    ");
-        System.out.println("1) Categoria");
-        System.out.println("2) Movimientos");
-        System.out.println("3) Informes");
-        System.out.println("4) Cerrar Sesión");
-        System.out.println("--------------------------");
-    }
+private void mostrarMenu() {
+    System.out.println("╔══════════════════════════════════╗");
+    System.out.println("║          Menu Principal     ║");
+    System.out.println("╠══════════════════════════════════╣");
+    System.out.println("║ 1) Categoria                ║");
+    System.out.println("║ 2) Movimientos              ║");
+    System.out.println("║ 3) Informes                 ║");
+    System.out.println("║ 4) Cerrar Sesión            ║");
+    System.out.println("╚══════════════════════════════════╝");
+}
     
 /**
  * Solicita al usuario que seleccione una opción del menú.

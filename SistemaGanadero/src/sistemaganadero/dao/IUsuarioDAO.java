@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
 package sistemaganadero.dao;
-
+import java.sql.SQLException;
 import java.util.List;
 import sistemaganadero.modelo.Usuario;
 
@@ -18,5 +18,15 @@ public interface IUsuarioDAO {
      * 
      * @return List<Usuario> Lista de usuarios disponibles en el sistema.
      */
-        List<Usuario> obtenerUsuarios();
+    List<Usuario> obtenerUsuarios();
+    
+    /**
+     * Autentica a un usuario dado su nombre de usuario o correo electrónico y contraseña.
+     * 
+     * @param usuarioInput Nombre de usuario o correo electrónico.
+     * @param passwordInput Contraseña del usuario.
+     * @return Usuario autenticado si las credenciales son válidas; de lo contrario, retorna null.
+     * @throws SQLException Si ocurre un error en la consulta a la base de datos.
+     */
+    Usuario autenticarUsuario(String usuarioInput, String passwordInput) throws SQLException;
 }
