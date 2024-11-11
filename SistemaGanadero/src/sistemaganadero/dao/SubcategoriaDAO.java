@@ -9,18 +9,10 @@ import java.util.ArrayList;
 import sistemaganadero.modelo.Categoria;
 import sistemaganadero.modelo.Subcategoria;
 import java.sql.PreparedStatement;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import conexion.ConexionBD;
-import java.util.Calendar;
-import java.util.Date;
-import sistemaganadero.modelo.Usuario;
-import sistemaganadero.modelo.Rol;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 /**
  *
  * @author Usuario

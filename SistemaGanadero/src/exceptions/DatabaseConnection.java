@@ -6,7 +6,7 @@ package exceptions;
 
 /**
  *
- * @author Usuario
+ * @author Francisco de la Cruz v1.0
  */
 public class DatabaseConnection extends Exception {
     public DatabaseConnection(String message, Throwable cause) {

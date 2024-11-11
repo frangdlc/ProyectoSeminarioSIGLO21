@@ -4,7 +4,6 @@
  */
 package sistemaganadero.view;
 
-import exceptions.OptionNotAvailable;
 import java.util.Scanner;
 import sistemaganadero.controller.ControllerInforme;
 import sistemaganadero.modelo.Establecimiento;

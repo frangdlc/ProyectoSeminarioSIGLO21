@@ -4,16 +4,11 @@
  */
 package sistemaganadero.dao;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import conexion.ConexionBD;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import sistemaganadero.modelo.Usuario;
 import sistemaganadero.modelo.Rol;
 import java.sql.SQLException;

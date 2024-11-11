@@ -6,7 +6,6 @@ package sistemaganadero.controller;
 
 import java.sql.Date;
 import java.util.List;
-import sistemaganadero.dao.IMortandadDAO;
 import sistemaganadero.dao.IMovimientoDAO;
 import sistemaganadero.modelo.Mortandad;
 import sistemaganadero.modelo.Establecimiento;

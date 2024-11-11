@@ -4,23 +4,12 @@
  */
 package sistemaganadero.dao;
 import java.sql.PreparedStatement;
-import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.List;
 import sistemaganadero.modelo.Categoria;
 import java.sql.Connection;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import conexion.ConexionBD;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import sistemaganadero.modelo.Usuario;
-import sistemaganadero.modelo.Rol;
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,7 +27,7 @@ public class CategoriaDAO implements ICategoriaDAO {
     
 @Override
 public List<Categoria> obtenerCategorias() {
-    List<Categoria> categorias = new ArrayList<>(); // Nueva lista en cada llamada
+    List<Categoria> categorias = new ArrayList<>();
 
     Connection con = null;
     
